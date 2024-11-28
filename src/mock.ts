@@ -4,7 +4,7 @@ import jsonpath from 'jsonpath';
 import { RedisService } from "ondc-automation-cache-lib";
 import { performL2Validations } from './validations/l2-validations';
 import { resolveTemplate } from './utils/template_parser';
-import on_search_template from './templates/on_search.json'
+import on_search_template from './templates/on_search_1.json'
 
 function get_required_data(payload: any, action: string){
     let data: any = {};
