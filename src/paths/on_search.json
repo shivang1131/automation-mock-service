@@ -1,0 +1,3 @@
+{
+    "item_ids": "$.message.catalog.providers[*].items[*].id"
+}

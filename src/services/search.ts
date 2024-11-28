@@ -8,6 +8,7 @@ const handleSerachRequest = (payload: any) => {
 
 const handleSearch1 = (payload: any) => {
   console.log("search 1 payload: ", payload);
+  
 };
 
 const handleSeach2 = (payload: any) => {

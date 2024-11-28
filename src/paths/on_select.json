@@ -1,0 +1,4 @@
+{
+    "item_price": "$.message.order.items[*].price.value",
+    "total_price": "$.message.order..quote.price.value"
+}
