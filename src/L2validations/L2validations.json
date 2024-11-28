@@ -1,0 +1,17 @@
+{
+	"search": [
+		{
+			"_NAME_": "check_start_gps_precision",
+			"attr": "$.message.intent.fulfillment.stops[?(@.type=='START')].location.gps",
+			"reg": ["/^\\d+\\.\\d{6}$/"],
+			"_RETURN_": "attr follow regex reg"
+		},
+        {
+			"_NAME_": "check_end_gps_precision",
+			"attr": "$.message.intent.fulfillment.stops[?(@.type=='END')].location.gps",
+			"reg": ["/^\\d+\\.\\d{6}$/"],
+			"_RETURN_": "attr follow regex reg"
+		}
+	]
+
+}
