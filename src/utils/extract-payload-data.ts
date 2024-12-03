@@ -35,6 +35,7 @@ const extractPayloadData = (payload: any, type: string) => {
     const path = dataPaths[key];
     const value = jsonpath.query(payload, path);
     extarctedData[key] = String(value);
+    extarctedData["maximum_quantity"] = 5
   }
 
   return {

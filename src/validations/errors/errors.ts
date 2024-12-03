@@ -23,7 +23,11 @@ const errors = [
     {
         code: 40001,
         message: "End GPS coordinates do not meet precision specifications",
-    }
+    },
+    {
+        code: 40002,
+        message: "Selected quantity is higher than maximum quantity",
+    },
 ];
 
 export function getError(code: number) {

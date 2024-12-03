@@ -1,6 +1,7 @@
 import { validateSearch } from "./search";
+import { validateSelect } from "./select";
 
-export async function performL2Validations(
+export function performL2Validations(
     action: string,
     payload: string,
     externalData = {},
@@ -8,6 +9,8 @@ export async function performL2Validations(
     switch (action) {
         case "search":
             return validateSearch(payload, externalData);
+        case "select":
+            return validateSelect(payload, externalData);
         default:
             throw new Error("Action not found");
     }

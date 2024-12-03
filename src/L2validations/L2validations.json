@@ -12,6 +12,14 @@
 			"reg": ["/^\\d+\\.\\d{6}$/"],
 			"_RETURN_": "attr follow regex reg"
 		}
-	]
+	],
+    "select": [
+            {
+            "_NAME_": "check_maximum_quantity",
+			"attr": "$.message.order.items[*].quantity.selected.count",
+            "maximum": "$._EXTERNAL.maximum_quantity",
+			"_RETURN_": "attr equal to maximum"
+            }
+        ]
 
 }
