@@ -1,0 +1,24 @@
+{
+  "context": {
+    "location": {
+      "country": {
+        "code": "IND"
+      },
+      "city": {
+        "code": "{{cityCode}}"
+      }
+    },
+    "domain": "ONDC:TRV11",
+    "action": "{{action}}",
+    "version": "2.0.0",
+    "bpp_id": "ondc-automation-tool",
+    "bap_uri": "{{bap_uri}}",
+    "bap_id": "{{bap_id}}",
+    "bpp_uri": "ondc-automation-tool.com/endpoint",
+    "transaction_id": "{{transcation_id}}",
+    "message_id": "{{message_id}}",
+    "timestamp": "{{timestamp}}",
+    "ttl": "PT30S"
+  },
+  "error": "{{error}}"
+}
