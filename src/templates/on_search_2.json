@@ -15,7 +15,7 @@
     "bap_uri": "{{bap_uri}}",
     "bap_id": "{{bap_id}}",
     "bpp_uri": "ondc-automation-tool.com/endpoint",
-    "transaction_id": "{{transcation_id}}",
+    "transaction_id": "{{transaction_id}}",
     "message_id": "{{message_id}}",
     "timestamp": "{{timestamp}}",
     "ttl": "PT30S"
@@ -40,13 +40,6 @@
                 "code": "TICKET"
               },
               "id": "C1"
-            },
-            {
-              "descriptor": {
-                "name": "Pass",
-                "code": "PASS"
-              },
-              "id": "C2"
             }
           ],
           "time": {
@@ -86,8 +79,7 @@
               "fulfillment_ids": ["F1"],
               "time": {
                 "label": "Validity",
-                "duration": "PT2D",
-                "timestamp": "2021-03-23T11:01:40.065Z"
+                "duration": "PT2D"
               }
             },
             {
@@ -112,34 +104,7 @@
               "fulfillment_ids": ["F1"],
               "time": {
                 "label": "Validity",
-                "duration": "PT2D",
-                "timestamp": "2021-03-23T11:01:40.065Z"
-              }
-            },
-            {
-              "id": "I3",
-              "category_ids": ["1", "2"],
-              "descriptor": {
-                "name": "Journey Pass",
-                "code": "Pass"
-              },
-              "price": {
-                "currency": "INR",
-                "value": "500"
-              },
-              "quantity": {
-                "maximum": {
-                  "count": 1
-                },
-                "minimum": {
-                  "count": 1
-                }
-              },
-              "fulfillment_ids": ["F2"],
-              "time": {
-                "label": "Validity",
-                "duration": "PT2D",
-                "timestamp": "2021-03-23T11:01:40.065Z"
+                "duration": "PT2D"
               }
             }
           ],
@@ -155,7 +120,7 @@
                       "name": "Shaheed Sthal(New Bus Adda)",
                       "code": "SHAHEED_STHAL"
                     },
-                    "gps": "28.686576, 77.441632"
+                    "gps": "28.686176, 77.442632"
                   },
                   "id": "1"
                 },
@@ -448,117 +413,10 @@
                       "name": "Azadpur",
                       "code": "AZADPUR"
                     },
-                    "gps": "28.707358, 77.180910"
+                    "gps": "28.686176, 77.442632"
                   },
                   "id": "22",
                   "parent_stop_id": "21"
-                }
-              ],
-              "vehicle": {
-                "category": "METRO"
-              },
-              "tags": [
-                {
-                  "descriptor": {
-                    "code": "ROUTE_INFO"
-                  },
-                  "list": [
-                    {
-                      "descriptor": {
-                        "code": "ROUTE_ID"
-                      },
-                      "value": "242"
-                    },
-                    {
-                      "descriptor": {
-                        "code": "ROUTE_NAME"
-                      },
-                      "value": "Yellow Line"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "id": "F2",
-              "type": "TRIP",
-              "stops": [
-                {
-                  "type": "START",
-                  "location": {
-                    "descriptor": {
-                      "name": "Shaheed Sthal(New Bus Adda)",
-                      "code": "SHAHEED_STHAL"
-                    },
-                    "gps": "28.686576, 77.441632"
-                  },
-                  "id": "1"
-                },
-                {
-                  "type": "TRANSIT_STOP",
-                  "instructions": {
-                    "short_desc": "Please Change here for Yellow Line"
-                  },
-                  "location": {
-                    "descriptor": {
-                      "name": "Kashmere Gate"
-                    },
-                    "gps": "28.738426, 77.139922"
-                  },
-                  "id": "2",
-                  "parent_stop_id": "1"
-                },
-                {
-                  "type": "END",
-                  "location": {
-                    "descriptor": {
-                      "name": "Azadpur",
-                      "code": "AZADPUR"
-                    },
-                    "gps": "28.707358, 77.180910"
-                  },
-                  "id": "3",
-                  "parent_stop_id": "2"
-                }
-              ],
-              "tags": [
-                {
-                  "descriptor": {
-                    "code": "TRIP_DETAILS"
-                  },
-                  "list": [
-                    {
-                      "descriptor": {
-                        "code": "AVAILABLE_TRIPS"
-                      },
-                      "value": "30"
-                    },
-                    {
-                      "descriptor": {
-                        "code": "UTILIZED_TRIPS"
-                      },
-                      "value": "0"
-                    }
-                  ]
-                },
-                {
-                  "descriptor": {
-                    "code": "ROUTE_INFO"
-                  },
-                  "list": [
-                    {
-                      "descriptor": {
-                        "code": "ROUTE_ID"
-                      },
-                      "value": "242"
-                    },
-                    {
-                      "descriptor": {
-                        "code": "ROUTE_NAME"
-                      },
-                      "value": "Yellow Line"
-                    }
-                  ]
                 }
               ],
               "vehicle": {
@@ -580,7 +438,13 @@
                       "descriptor": {
                         "code": "BUYER_FINDER_FEES_PERCENTAGE"
                       },
-                      "value": "1"
+                      "value": "{{buyer_app_finder_fees}}"
+                    },
+                    {
+                      "descriptor": {
+                        "code": "BUYER_FINDER_FEES_TYPE"
+                      },
+                      "value": "percent"
                     }
                   ]
                 },

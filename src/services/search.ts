@@ -3,35 +3,40 @@ import { resolveTemplate } from "../utils/template_parser";
 import on_search_1_template from "../templates/on_search_1.json";
 import on_search_2_template from "../templates/on_search_2.json";
 import { sendResponse } from "../utils/api";
+import { RedisService } from "ondc-automation-cache-lib";
 
-const handleSerachRequest = (payload: any) => {
+const handleSerachRequest =  (payload: any) => {
   if (payload.message.intent.fulfillment.stops) {
-    handleSeach2(payload);
+    handleSearch2(payload);
   } else {
     handleSearch1(payload);
   }
 };
 
-const handleSearch1 = (payload: any) => {
-  console.log("search 1 payload: ", payload);
+const handleSearch1 = async (payload: any) => {
 
-  const extarctedData = extractPayloadData(payload, "search_1");
+  const extarctedData_search = extractPayloadData(payload, "search_1");
   // store in cache
   // valdiation
   // if(l2.template) { return }
-  const responsePayload = resolveTemplate(on_search_1_template, extarctedData);
-  sendResponse(responsePayload, "search");
+  const responsePayload = resolveTemplate(on_search_1_template, extarctedData_search);
+  const extarctedData_on_search = extractPayloadData(responsePayload,"on_search_1");
+  sendResponse(responsePayload, "on_search");
 };
 
-const handleSeach2 = (payload: any) => {
-  console.log("search 2 payload: ", payload);
+const handleSearch2 = async (payload: any) => {
 
-  const extarctedData = extractPayloadData(payload, "search_2");
-  // store in cache
-  // valdiation
-  // if(l2.template) { return }
-  const responsePayload = resolveTemplate(on_search_2_template, extarctedData);
-  sendResponse(responsePayload, "search");
+  const extarctedData_search = extractPayloadData(payload, "search_2");
+  
+  const responsePayload = resolveTemplate(on_search_2_template, extarctedData_search);
+  const extarctedData_on_search = extractPayloadData(responsePayload,"on_search_2");
+  extarctedData_on_search["timestamp"] = new Date().toISOString();
+  const combined_data = { ...extarctedData_search, ...extarctedData_on_search };
+  await RedisService.setKey(
+      payload?.context?.transaction_id,
+      JSON.stringify(combined_data),
+    );
+  sendResponse(responsePayload, "on_search");
 };
 
 export default handleSerachRequest;

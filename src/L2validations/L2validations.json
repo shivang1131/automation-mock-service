@@ -1,24 +1,98 @@
 {
-	"search": [
-		{
-			"_NAME_": "check_start_gps_precision",
-			"attr": "$.message.intent.fulfillment.stops[?(@.type=='START')].location.gps",
-			"reg": ["/^\\d+\\.\\d{6}$/"],
-			"_RETURN_": "attr follow regex reg"
-		},
+    "on_search":[
         {
-			"_NAME_": "check_end_gps_precision",
-			"attr": "$.message.intent.fulfillment.stops[?(@.type=='END')].location.gps",
-			"reg": ["/^\\d+\\.\\d{6}$/"],
-			"_RETURN_": "attr follow regex reg"
-		}
-	],
+            "_NAME_": "Check if name start codes are correct",
+            "start": "$.message.catalog.providers[0].fulfillments[*].stops[?(@.type == 'START')].location.descriptor.code",
+            "start_1": "$_EXTERNAL.start_code",
+            "_RETURN_": "start_1 all in start"
+        }
+    ],
     "select": [
             {
-            "_NAME_": "check_maximum_quantity",
-			"attr": "$.message.order.items[*].quantity.selected.count",
-            "maximum": "$._EXTERNAL.maximum_quantity",
-			"_RETURN_": "attr equal to maximum"
+            "_NAME_": "check id selected", 
+			"attr": "$.message.order.items[*].id",
+            "ids": "$._EXTERNAL.item_ids",
+			"_RETURN_": "attr all in ids"
+            }
+        ],
+        "on_select": [
+            {
+            "_NAME_": "Category id is correctly mapped", 
+			"attr": "$.message.order.items[*].category_ids",
+            "category_ids": "$._EXTERNAL.category_ids",
+			"_RETURN_": "attr all in category_ids"
+            },
+            {
+                "_NAME_": "Fulfillments are correctly mapped", 
+                "attr": "$.message.order.items[*].fulfillment_ids[*]",
+                "fulfillments": "$.message.order.fulfillments[*].id",
+                "_RETURN_": "attr all in fulfillments" 
+            }
+        ],
+        "init": [
+            {
+                "_NAME_": "Category id is correctly mapped", 
+                "attr": "$.message.order.payments[*].tags[?(@.descriptor.code=='BUYER_FINDER_FEES')].list[?(@.descriptor.code=='BUYER_FINDER_FEES_PERCENTAGE')].value",
+                "buyer_finder_fees": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
+                "_RETURN_": "attr equal buyer_finder_fees"
+            },
+            {
+                "_NAME_": "Items sent in init and select are the same", 
+                "attr": "$.message.order.items[*].id",
+                "item_ids": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
+                "_RETURN_": "attr equal item_ids" 
+            }
+        ],
+        "on_init": [
+            {
+                "_NAME_": "Fulfillments are correctly mapped", 
+                "attr": "$.message.order.items[*].fulfillment_ids[*]",
+                "fulfillments": "$.message.order.fulfillments[*].id",
+                "_RETURN_": "attr equal to fulfillments" 
+            }
+        ],
+        "confirm": [
+            {
+                "_NAME_": "Items sent in init and confirm are the same", 
+                "attr": "$.message.order.items[*].id",
+                "item_ids": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
+                "_RETURN_": "attr equal item_ids" 
+            },
+            {
+                "_NAME_": "Items sent in init and confirm are the same", 
+                "attr": "$.message.order.payments[*].params.amount",
+                "price": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
+                "_RETURN_": "attr equal price" 
+            }
+        ],
+        "on_confirm": [
+            {
+                "_NAME_": "Price matches payment and quote.breakup", 
+                "attr": "$.message.order.payments[*].params.amount",
+                "price": "$.message.order.quote.price.value",
+                "_RETURN_": "attr equal price" 
+            },
+            {
+                "_NAME_": "Price is same as previous calls", 
+                "attr": "$.message.order.quote.price.value",
+                "price": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
+                "_RETURN_": "attr equal price" 
+            }
+        ],
+        "status": [
+            {
+                "_NAME_": "Order id should exist", 
+                "attr": "$.message.order_id",
+                "order_id": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
+                "_RETURN_": "attr equal order_id" 
+            }
+        ],
+        "on_status": [
+            {
+                "_NAME_": "Order id should match the order id ", 
+                "attr": "$.message.order.id",
+                "order_id": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
+                "_RETURN_": "attr equal order_id" 
             }
         ]
 

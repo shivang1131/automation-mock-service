@@ -1,7 +1,0 @@
-{
-    "payment_id" : "$.message.order.payments[*].id",
-    "bank_code": "$.message.order.payments[*].params.bank_code",
-    "bank_account_number": "$.message.order.payments[*].params.bank_account_number",
-    "total_price": "$.message.order..quote.price.value"
-
-}

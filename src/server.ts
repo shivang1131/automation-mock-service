@@ -1,8 +1,13 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import routes from "./routes";
+
 import jsonPath from "jsonpath";
+import { RedisService } from "ondc-automation-cache-lib";
+import apiRouter from "./routes";
+import router from "./routes/trigger";
+
+RedisService.useDb(0);
 
 const app = express();
 
@@ -12,7 +17,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
-app.use("/api", routes);
+app.use("/api", apiRouter);
+app.use("/trigger",router)
 
 const PORT = process.env.PORT || 6000;
 
@@ -25,6 +31,5 @@ app.listen(PORT, () => {
     },
   };
 
-  console.log("js", jsonPath.query(data, "$.context.location.citu"));
   console.log(`Server running at ${PORT}`);
 });

@@ -1,5 +1,0 @@
-{
-    "billing_name": "$.message.order.billing.name",
-    "billing_email": "$.message.order.billing.email",
-    "billing_phone": "$.message.order.billing.phone"
-}

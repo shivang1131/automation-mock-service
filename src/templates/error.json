@@ -15,7 +15,7 @@
     "bap_uri": "{{bap_uri}}",
     "bap_id": "{{bap_id}}",
     "bpp_uri": "ondc-automation-tool.com/endpoint",
-    "transaction_id": "{{transcation_id}}",
+    "transaction_id": "{{transaction_id}}",
     "message_id": "{{message_id}}",
     "timestamp": "{{timestamp}}",
     "ttl": "PT30S"

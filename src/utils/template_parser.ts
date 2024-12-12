@@ -1,41 +1,3 @@
-// const testData = {
-//     name: "Jane Smith",
-//     age: 28,
-//     transaction_id: "12312-123-1231-123r",
-//     id: "12312-1231-312-31-23",
-//     biiling: {
-//       address: {
-//         street: "123 Elm Street",
-//         city: "Metropolis",
-//         zip: "54321",
-//       },
-//     },
-//   };
-  
-//   const jsonTemplate = {
-//     context: {
-//       domain: "TRV:11",
-//       transaction_id: "{{transaction_id}}",
-//     },
-//     message: {
-//       order: {
-//         id: "{{id}}",
-//         something: "sadasd",
-//       },
-//       billing: "{{biiling}}",
-//     },
-//   };
-  
-//   const templateData = {
-//     cityCode: "std:050",
-//     bpp_id: "somthing",
-//     bap_uri: "askdhfa",
-//     bap_id: "askdhfa",
-//     bpp_uri: "askdhfa",
-//     transcation_id: "askdhfa",
-//     message_id: "sdfsdf",
-//     timestamp: "sdfsdfsdf",
-//   };
   
   export function resolveTemplate(
     template: any,
@@ -53,7 +15,6 @@
             variabelName = path;
             return path;
           });
-  
   
           if (data[variabelName]) {
             return data[variabelName];

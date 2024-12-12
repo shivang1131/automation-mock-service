@@ -1,9 +1,14 @@
 import { Router } from "express";
 
-const router = Router();
+const apiRouter = Router();
 
-import { handleRequest } from "./../controller/index";
+import { handleBAPRequest,triggerevent, handleBPPrequest, handleRequest } from "./../controller/index";
 
-router.post("/:action", handleRequest);
+apiRouter.post("/:action", handleRequest);
 
-export default router;
+apiRouter.post("/trigger",triggerevent )
+
+// router.post("/seller/:action",handleBPPrequest)
+
+
+export default apiRouter;
