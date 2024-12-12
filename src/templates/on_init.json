@@ -12,12 +12,12 @@
     "action": "on_init",
     "version": "2.0.0",
     "bpp_id": "ondc-automation-tool",
-    "bap_uri": "{{bap_uri}}",
+    "bap_uri": "https://example.com/subscriber6",
     "bap_id": "{{bap_id}}",
-    "bpp_uri": "ondc-automation-tool.com/endpoint",
+    "bpp_uri": "https://8810-182-156-19-250.ngrok-free.app",
     "transaction_id": "{{transaction_id}}",
     "message_id": "{{message_id}}",
-    "timestamp": "{{timestamp}}",
+    "timestamp": "2024-12-18T07:06:39.136Z",
     "ttl": "PT30S"
   },
   "message": {

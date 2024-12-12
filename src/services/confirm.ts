@@ -72,6 +72,9 @@ const handleConfirmRequest = async (payload: any) => {
     "bank_code": "XXXXXXXX",
     "bank_account_number": "xxxxxxxxxxxxxx"
   }
+  if (!Array.isArray(extarctedData.updated_payments)) {
+    extarctedData.updated_payments = [extarctedData.updated_payments];
+  }
   // store in cache
   // valdiation
   // if(l2.template) { return }
