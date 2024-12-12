@@ -3,6 +3,6 @@
   "bap_id": "$.context.bap_id",
   "bap_uri": "$.context.bap_uri",
   "message_id": "$.context.message_id",
-  "billing": "$.message.order.billing[*]",
+  "billing": "$.message.order.billing",
   "payments": "$.message.order.payments[*]"
 }

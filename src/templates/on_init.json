@@ -41,7 +41,11 @@
         }
       },
       "fulfillments": "{{fulfillments}}",
-      "billing": "{{billing}}",
+      "billing": {
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "phone": "+91-9897867564"
+      },
       "quote": "{{quote}}",
       "payments": "{{payments}}",
       "cancellation_terms": [

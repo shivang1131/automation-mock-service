@@ -7,7 +7,7 @@ import handleOnSearchRequest from "../services/on_search";
 import handleOnSelectRequest from "../services/on_select"
 import handleOnInitRequest from "../services/on_init"
 import initiateFirstSearch from "../services/first_search"
-
+import handleOnConfirmRequest from "../services/on_confirm";
 
 export const handleRequest = (req:Request, res: Response): any => {
   try{
@@ -42,6 +42,10 @@ export const handleRequest = (req:Request, res: Response): any => {
         console.log("on_init");
         handleOnInitRequest(payload);
         return res.status(200).json({ status: "success" });
+        case "on_confirm":
+          console.log("on_confirm");
+          handleOnConfirmRequest(payload);
+          return res.status(200).json({ status: "success" });
       default:
         throw new Error(`Invalid request type ${action}`);
     }
@@ -96,7 +100,7 @@ export const handleBPPrequest = (req: Request, res: Response): any => {
         console.log("on_select");
         handleOnSelectRequest(payload);
         return res.status(200).json({ status: "success" });
-      case "init":
+      case "on_init":
         console.log("on_init");
         handleOnInitRequest(payload);
         return res.status(200).json({ status: "success" });

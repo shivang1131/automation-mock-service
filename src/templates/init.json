@@ -16,8 +16,8 @@
       "bpp_id": "{{bpp_id}}",
       "bpp_uri": "{{bpp_uri}}",
       "transaction_id": "6943e9e2-4fb5-487c-92b7-13ba8018f176",
-      "message_id": "7343e9e2-4fb5-487c-92b7-13ba8018f176",
-      "timestamp": "2024-12-11T06:05:39.136Z",
+      "message_id": "96e93bea-320f-48fd-9d6e-a3b9458d856e",
+      "timestamp": "2024-12-18T07:05:39.136Z",
       "ttl": "PT30S"
     },
     "message": {

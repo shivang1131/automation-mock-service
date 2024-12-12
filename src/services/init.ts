@@ -15,6 +15,9 @@ const handleInitRequest = async (payload: any) => {
     "bank_code": "XXXXXXXX",
     "bank_account_number": "xxxxxxxxxxxxxx"
   }
+  if (!Array.isArray(extarctedData.payments)) {
+    extarctedData.payments = [extarctedData.payments];
+  }
   // store in cache
   // valdiation
   // if(l2.template) { return }
