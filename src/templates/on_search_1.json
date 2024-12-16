@@ -5,14 +5,14 @@
         "code": "IND"
       },
       "city": {
-        "code": "{{cityCode}}"
+        "code": "std:080"
       }
     },
     "domain": "ONDC:TRV11",
     "action": "on_search",
     "version": "2.0.1",
     "bpp_id": "api.example-bpp.com",
-    "bap_uri": "https://example.com/subscriber6",
+    "bap_uri": "https://mobility-staging.ondc.org/buyer",
     "bap_id": "{{bap_id}}",
     "bpp_uri": "https://8810-182-156-19-250.ngrok-free.app",
     "transaction_id": "{{transaction_id}}",

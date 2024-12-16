@@ -5,19 +5,19 @@
           "code": "IND"
         },
         "city": {
-          "code": "std:011"
+          "code": "std:080"
         }
       },
       "domain": "ONDC:TRV11",
       "timestamp": "2024-12-18T07:00:39.136Z",
-      "bap_id": "api.example-bap.com",
+      "bap_id": "dev-automation.ondc.org",
       "transaction_id": "6943e9e2-4fb5-487c-92b7-13ba8018f176",
       "message_id": "7773e9e2-4fb5-487c-92b7-13ba8018f177",
       "version": "2.0.1",
       "action": "search",
-      "bap_uri": "https://8810-182-156-19-250.ngrok-free.app",
-      "bpp_id": "mock",
-      "bpp_uri": "https://example.com/subscriber6",
+      "bap_uri": "https://dev-automation.ondc.org/buyer",
+      "bpp_id": "mobility-staging.ondc.org",
+      "bpp_uri": "https://mobility-staging.ondc.org/seller",
       "ttl": "PT30S"
     },
     "message": {
