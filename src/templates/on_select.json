@@ -11,13 +11,13 @@
     "domain": "ONDC:TRV11",
     "action": "on_select",
     "version": "2.0.0",
-    "bpp_id": "ondc-automation-tool",
-    "bap_uri": "https://mobility-staging.ondc.org/buyer",
+    "bpp_id": "dev-automation.ondc.org",
+    "bap_uri": "{{bap_uri}}",
     "bap_id": "{{bap_id}}",
-    "bpp_uri": "https://8810-182-156-19-250.ngrok-free.app",
+    "bpp_uri": "https://dev-automation.ondc.org/seller",
     "transaction_id": "{{transaction_id}}",
     "message_id": "{{message_id}}",
-    "timestamp": "2024-12-18T07:04:39.136Z",
+    "timestamp": "{{timestamp}}",
     "ttl": "PT30S"
   },
   "message": {

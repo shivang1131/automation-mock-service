@@ -13,11 +13,11 @@
       "version": "2.0.1",
       "bap_id": "dev-automation.ondc.org",
       "bap_uri": "https://dev-automation.ondc.org/buyer",
-      "bpp_id": "mobility-staging.ondc.org",
-      "bpp_uri": "https://mobility-staging.ondc.org/seller",
-      "transaction_id": "6943e9e2-4fb5-487c-92b7-13ba8018f176",
-      "message_id": "ad00a6cc-7e05-4c92-a3c4-93c1f5137291",
-      "timestamp": "2024-12-18T07:07:39.136Z",
+      "bpp_id": "{{bpp_id}}",
+      "bpp_uri": "{{bpp_uri}}",
+      "transaction_id": "{{transaction_id}}",
+      "message_id": "{{message_id}}",
+      "timestamp": "{{timestamp}}",
       "ttl": "PT30S"
     },
     "message": {

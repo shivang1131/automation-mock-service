@@ -18,8 +18,8 @@ const handleOnSearchRequest = async (payload: any) => {
 
   const handleOnSearchRequest1 = async (payload: any) => {
     const extracted_data = extractPayloadData(payload, "on_search_1");
-    extracted_data["transaction_id"] = "7743a9e2-4fb5-487c-92b7-13ba8018f177"
-    extracted_data["message_id"] = "8743e9e2-4fb5-487c-92b7-13ba8018f177"
+    extracted_data["transaction_id"] = generateRandomUUID()
+    extracted_data["message_id"] = generateRandomUUID()
     extracted_data["timestamp"] = new Date().toISOString();
     extracted_data["city_code"] = payload?.city_code
 
@@ -37,7 +37,7 @@ const handleOnSearchRequest = async (payload: any) => {
     let cachedata: any = await RedisService.getKey(payload.context.transaction_id);
     let json_cache_data = JSON.parse(cachedata)
     const extracted_data = extractPayloadData(payload, "on_search_2");
-    extracted_data["message_id"] = "6843e9e2-4fb5-487c-92b7-13ba8018f176"
+    extracted_data["message_id"] = generateRandomUUID()
     extracted_data["timestamp"] = new Date().toISOString();
     const combined_data = {...json_cache_data,...extracted_data}
     const responsePayload = resolveTemplate(select, combined_data);

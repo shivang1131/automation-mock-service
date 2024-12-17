@@ -9,15 +9,15 @@
         }
       },
       "domain": "ONDC:TRV11",
-      "timestamp": "2024-12-18T07:00:39.136Z",
+      "timestamp": "{{timestamp}}",
       "bap_id": "dev-automation.ondc.org",
-      "transaction_id": "6943e9e2-4fb5-487c-92b7-13ba8018f176",
-      "message_id": "7773e9e2-4fb5-487c-92b7-13ba8018f177",
+      "transaction_id": "{{transaction_id}}",
+      "message_id": "{{message_id}}",
       "version": "2.0.1",
       "action": "search",
       "bap_uri": "https://dev-automation.ondc.org/buyer",
-      "bpp_id": "mobility-staging.ondc.org",
-      "bpp_uri": "https://mobility-staging.ondc.org/seller",
+      "bpp_id": "{{bpp_id}}",
+      "bpp_uri": "{{bpp_uri}}",
       "ttl": "PT30S"
     },
     "message": {

@@ -14,7 +14,7 @@ const initiateFirstSearch = async (payload: any) => {
         extracted_data["transaction_id"] = generateRandomUUID()
         extracted_data["message_id"] = generateRandomUUID()
         extracted_data["timestamp"] = new Date().toISOString()
-        extracted_data["city_code"] = payload.city_code
+        extracted_data["city_code"] = "std:080"
         extracted_data["subscriber"] = subscriber_url
         const responsePayload = resolveTemplate(search_1, extracted_data,);
         sendResponse(responsePayload, "search",{ subscriberUrl: subscriber_url});
