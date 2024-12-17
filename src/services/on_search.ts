@@ -7,6 +7,24 @@ import { RedisService } from "ondc-automation-cache-lib";
 import { generateRandomUUID } from "../utils/generate_uuids";
 import { json } from "body-parser";
 
+function getRandomStations(data: any) {
+    // Flatten all stops across all fulfillments
+    const allStops = data.flatMap((fulfillment: any) => fulfillment.stops);
+  
+    // Get two unique random indices
+    let firstIndex = Math.floor(Math.random() * allStops.length);
+    let secondIndex;
+  
+    do {
+      secondIndex = Math.floor(Math.random() * allStops.length);
+    } while (secondIndex === firstIndex); // Ensure the indices are different
+  
+    // Return the randomly selected stops
+    return {
+      start_station: allStops[firstIndex].location.descriptor.code,
+      end_station: allStops[secondIndex].location.descriptor.code
+    };
+  }
 const transformToItemFormat = (items: any[]): any => {
     return items.map(item => ({
       id: item.id,
@@ -61,7 +79,9 @@ const handleOnSearchRequest = async (payload: any) => {
     extracted_data["message_id"] = generateRandomUUID()
     extracted_data["timestamp"] = new Date().toISOString();
     extracted_data["city_code"] = payload?.city_code
-
+    const { start_station, end_station } = getRandomStations(extracted_data["fulfillments"]);
+    extracted_data["start_station"] = start_station
+    extracted_data["end_station"] = end_station
     await RedisService.setKey(
         extracted_data["transaction_id"],
         JSON.stringify(extracted_data),

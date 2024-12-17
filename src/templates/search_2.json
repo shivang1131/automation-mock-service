@@ -28,7 +28,7 @@
               "type": "START",
               "location": {
                 "descriptor": {
-                  "code": "SHAHEED_STHAL"
+                  "code": "{{start_station}}"
                 }
               }
             },
@@ -36,7 +36,7 @@
               "type": "END",
               "location": {
                 "descriptor": {
-                  "code": "AZADPUR"
+                  "code": "{{end_station}}"
                 }
               }
             }
