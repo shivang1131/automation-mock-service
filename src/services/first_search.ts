@@ -3,8 +3,7 @@ import { resolveTemplate } from "../utils/template_parser";
 import { sendResponse } from "../utils/api";
 import { RedisService } from "ondc-automation-cache-lib";
 import search_1 from "../templates/search_1.json";
-import { generateRandomUUID } from "../utils/generate_uuids";
-
+import { generateRandomUUID } from "../utils/generate_uuids";22
 
 const initiateFirstSearch = async (payload: any) => {
 

@@ -24,7 +24,7 @@ const handleInitRequest = async (payload: any) => {
   extarctedData["timestamp"] = new Date().toISOString();
   const combined_data = { ...json_cache_data, ...extarctedData}
   const responsePayload = resolveTemplate(on_init_template, combined_data);
-
+  RedisService.useDb(0);
   await RedisService.setKey(
     payload?.context?.transaction_id,
     JSON.stringify(combined_data),

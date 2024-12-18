@@ -82,6 +82,7 @@ const handleOnSearchRequest = async (payload: any) => {
     const { start_station, end_station } = getRandomStations(extracted_data["fulfillments"]);
     extracted_data["start_station"] = start_station
     extracted_data["end_station"] = end_station
+    RedisService.useDb(0);
     await RedisService.setKey(
         extracted_data["transaction_id"],
         JSON.stringify(extracted_data),
@@ -104,6 +105,7 @@ const handleOnSearchRequest = async (payload: any) => {
     extracted_data["chosen_items"] = chosen_items
     const combined_data = {...json_cache_data,...extracted_data}
     const responsePayload = resolveTemplate(select, combined_data);
+    RedisService.useDb(0);
     await RedisService.setKey(
         payload.context.transaction_id,
         JSON.stringify(combined_data),

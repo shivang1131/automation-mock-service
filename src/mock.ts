@@ -22,6 +22,7 @@ async function insert_and_update_cache(payload: any,paths:any){
                 json_value[key] = String(values);
             }
         }
+        RedisService.useDb(0);
         await RedisService.setKey(
             payload?.context?.transaction_id,
             JSON.stringify(json_value),

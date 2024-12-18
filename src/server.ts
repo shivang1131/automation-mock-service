@@ -7,14 +7,17 @@ import { RedisService } from "ondc-automation-cache-lib";
 import apiRouter from "./routes";
 import router from "./routes/trigger";
 
-RedisService.useDb(0);
+
+RedisService.useDb(1);
 
 const app = express();
+
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Routes
 app.use("/api", apiRouter);
