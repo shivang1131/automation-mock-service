@@ -1,4 +1,5 @@
 import axios from "axios";
+import logger from "./logger";
 
 export const sendResponse = async (data: any, type: any, queryParam?: Record<string, string>) => {
   try {
@@ -14,9 +15,9 @@ export const sendResponse = async (data: any, type: any, queryParam?: Record<str
     const response = await axios.post(url, data);
 
     // Log the response
-    console.log("response>", response.data);
-  } catch (error) {
+    logger.info("response>", response.data);
+  } catch (error:any) {
     // Handle errors
-    console.error("Error sending response:", error);
+    logger.error("Error sending response at url:"+` ${process.env.API_SERVICE_LAYER}/api/${type}`, error);
   }
 };

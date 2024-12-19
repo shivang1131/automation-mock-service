@@ -7,6 +7,7 @@ import init from "../dataPaths/init.json";
 import confirm from "../dataPaths/confirm.json";
 import on_search_1 from "../dataPaths/on_search_1.json";
 import on_search_2 from "../dataPaths/on_search_2.json";
+import logger from "./logger";
 
 
 const extractPayloadData = (payload: any, type: string) => {
@@ -36,7 +37,7 @@ const extractPayloadData = (payload: any, type: string) => {
       dataPaths = on_search_2
       break;
     default:
-      console.log("invalid type for data path" + type);
+      logger.info("extractPayloadData - invalid type for data path at" + type);
   }
 
   for (const key in dataPaths) {

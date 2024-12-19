@@ -5,8 +5,7 @@ import error_template from "../templates/error_seller.json";
 import { sendResponse } from "../utils/api";
 import { performL2Validations } from "../L2-validations";
 import { setToCache,getFromCache } from "../utils/redis";
-import { CACHE_DB_0 } from "../constants/contants";
-
+import { CACHE_DB_0 } from "../constants/constants";
 
 
 function createAndAppendFulfillments(items: any[], fulfillments: any[]): void {
@@ -136,6 +135,7 @@ const handleSelectRequest = async (payload: any) => {
 
 
   let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
+  if(!json_cache_data){throw new Error("Cache data not found at select action")}
   json_cache_data.items = filterItemsBySelectedIds(json_cache_data.items,extarctedData["selected_ids"])
   json_cache_data.fulfillments = getUniqueFulfillmentIdsAndFilterFulfillments(json_cache_data.items,json_cache_data.fulfillments)
   const updatedItems = json_cache_data.items.map((item: any) => ({
@@ -163,7 +163,6 @@ const handleSelectRequest = async (payload: any) => {
   );
   if (!l2[0].valid) {
     const combined_errors = {"errors": l2}
-    console.log(l2)
     const responsePayload = resolveTemplate(error_template, {
       ...combined_data,
       action: "on_select",

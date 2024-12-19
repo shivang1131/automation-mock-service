@@ -8,106 +8,95 @@ import handleOnSelectRequest from "../services/on_select"
 import handleOnInitRequest from "../services/on_init"
 import initiateFirstSearch from "../services/first_search"
 import handleOnConfirmRequest from "../services/on_confirm";
+import logger from "../utils/logger";
 
-export const handleRequest = (req:Request, res: Response): any => {
+export const handleRequest = async(req:Request, res: Response): Promise<any> => {
   try{
     const action = req.params.action;
     const payload = req.body;
     switch (action) {
       case "search":
-        console.log("search");
-        handleSerachRequest(payload);
+        await handleSerachRequest(payload);
         return res.status(200).json({ status: "success" });
       case "select":
-        console.log("select");
-        handleSelectRequest(payload);
+        await handleSelectRequest(payload);
         return res.status(200).json({ status: "success" });
       case "init":
-        console.log("init");
-        handleInitRequest(payload);
+        await handleInitRequest(payload);
         return res.status(200).json({ status: "success" });
       case "confirm":
-        console.log("confirm");
-        handleConfirmRequest(payload);
+        await handleConfirmRequest(payload);
         return res.status(200).json({ status: "success" });
       case "on_search":
-        console.log("on_search");
-        handleOnSearchRequest(payload);
+        await handleOnSearchRequest(payload);
         return res.status(200).json({ status: "success" });
       case "on_select":
-        console.log("on_select");
-        handleOnSelectRequest(payload);
+        await handleOnSelectRequest(payload);
         return res.status(200).json({ status: "success" });
       case "on_init":
-        console.log("on_init");
-        handleOnInitRequest(payload);
+        await handleOnInitRequest(payload);
         return res.status(200).json({ status: "success" });
-        case "on_confirm":
-          console.log("on_confirm");
-          handleOnConfirmRequest(payload);
-          return res.status(200).json({ status: "success" });
+      case "on_confirm":
+        await handleOnConfirmRequest(payload);
+        return res.status(200).json({ status: "success" });
       default:
         throw new Error(`Invalid request type ${action}`);
     }
   }
   catch (e: any) {
+    logger.error("Error in handleRequest", e);
     res
       .status(400)
       .json({ error: true, message: e?.message || "Somthing went wrong" });
   }
 }
-export const handleBAPRequest = (req: Request, res: Response): any => {
+export const handleBAPRequest = async (req: Request, res: Response): Promise<any> => {
   try {
     const action = req.params.action;
     const payload = req.body;
     switch (action) {
       case "search":
-        console.log("search");
-        handleSerachRequest(payload);
+        await handleSerachRequest(payload);
         return res.status(200).json({ status: "success" });
       case "select":
-        console.log("select");
-        handleSelectRequest(payload);
+        await handleSelectRequest(payload);
         return res.status(200).json({ status: "success" });
       case "init":
-        console.log("init");
-        handleInitRequest(payload);
+        await handleInitRequest(payload);
         return res.status(200).json({ status: "success" });
       case "confirm":
-        console.log("confirm");
-        handleConfirmRequest(payload);
+        await handleConfirmRequest(payload);
         return res.status(200).json({ status: "success" });
       default:
         throw new Error(`Invalid request type ${action}`);
     }
   } catch (e: any) {
+    logger.error("Error in handleBAPRequest", e);
     res
       .status(400)
       .json({ error: true, message: e?.message || "Somthing went wrong" });
   }
 };
 
-export const handleBPPrequest = (req: Request, res: Response): any => {
+export const handleBPPrequest = async (req: Request, res: Response): Promise<any> => {
   try {
     const action = req.params.action;
     const payload = req.body;
     switch (action) {
       case "on_search":
-        console.log("on_search");
-        handleOnSearchRequest(payload);
+        await handleOnSearchRequest(payload);
         return res.status(200).json({ status: "success" });
       case "on_select":
-        console.log("on_select");
-        handleOnSelectRequest(payload);
+        await handleOnSelectRequest(payload);
         return res.status(200).json({ status: "success" });
       case "on_init":
-        console.log("on_init");
-        handleOnInitRequest(payload);
+        await handleOnInitRequest(payload);
         return res.status(200).json({ status: "success" });
       default:
         throw new Error(`Invalid request type ${action}`);
     }
   } catch (e: any) {
+    logger.error("Error in handleBPPrequest", e);
     res
       .status(400)
       .json({ error: true, message: e?.message || "Somthing went wrong" });
@@ -115,11 +104,10 @@ export const handleBPPrequest = (req: Request, res: Response): any => {
 };
 
 
-export const triggerevent = (req: Request, res: Response): any => {
+export const triggerevent = async (req: Request, res: Response): Promise<any> => {
   try {
     const payload = req.body;
-      console.log("Initiating first search request")
-      initiateFirstSearch(payload)
+      await initiateFirstSearch(payload)
       return res.status(200).json({ status: "success" });
   } catch (e: any) {
     res

@@ -15,11 +15,3 @@ function isListOfStringsOrNull(variable: any): boolean {
 export default {
 	getJsonPath,
 };
-
-// const payload = {
-// 	context: {
-// 		item: "123",
-// 	},
-// };
-
-// console.log(getJsonPath(payload, "$.context.context"));
