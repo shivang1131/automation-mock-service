@@ -1,9 +1,10 @@
 import extractPayloadData from "../utils/extract-payload-data";
 import { resolveTemplate } from "../utils/template_parser";
 import { sendResponse } from "../utils/api";
-import { RedisService } from "ondc-automation-cache-lib";
+import { setToCache } from "../utils/redis";
 import search_1 from "../templates/search_1.json";
-import { generateRandomUUID } from "../utils/generate_uuids";22
+import { generateRandomUUID } from "../utils/generate_uuids";
+import { CACHE_DB_0 } from "../constants/contants";
 
 const initiateFirstSearch = async (payload: any) => {
 
@@ -15,10 +16,10 @@ const initiateFirstSearch = async (payload: any) => {
         extracted_data["timestamp"] = new Date().toISOString()
         extracted_data["cityCode"] = payload?.city_code
         extracted_data["subscriber"] = subscriber_url
-        RedisService.useDb(0);
-        await RedisService.setKey(
+        await setToCache(
             payload?.context?.transaction_id,
-            JSON.stringify(extracted_data),
+            extracted_data,
+            CACHE_DB_0
         );
         const responsePayload = resolveTemplate(search_1, extracted_data);
         sendResponse(responsePayload, "search",{ subscriberUrl: subscriber_url});

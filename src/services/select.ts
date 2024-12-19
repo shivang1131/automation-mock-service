@@ -4,8 +4,8 @@ import on_select_template from "../templates/on_select.json";
 import error_template from "../templates/error_seller.json";
 import { sendResponse } from "../utils/api";
 import { performL2Validations } from "../L2-validations";
-import { RedisService } from "ondc-automation-cache-lib";
-import { json } from "body-parser";
+import { setToCache,getFromCache } from "../utils/redis";
+import { CACHE_DB_0 } from "../constants/contants";
 
 
 
@@ -135,8 +135,7 @@ const handleSelectRequest = async (payload: any) => {
   // if(l2.template) { return }
 
 
-  let cachedata: any = await RedisService.getKey(payload.context.transaction_id);
-  let json_cache_data = JSON.parse(cachedata)
+  let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
   json_cache_data.items = filterItemsBySelectedIds(json_cache_data.items,extarctedData["selected_ids"])
   json_cache_data.fulfillments = getUniqueFulfillmentIdsAndFilterFulfillments(json_cache_data.items,json_cache_data.fulfillments)
   const updatedItems = json_cache_data.items.map((item: any) => ({
@@ -156,7 +155,6 @@ const handleSelectRequest = async (payload: any) => {
   extarctedData["timestamp"] = new Date().toISOString();
   const combined_data = { ...json_cache_data, ...extarctedData };
   const responsePayload = resolveTemplate(on_select_template, combined_data);
-  RedisService.useDb(0);
   const l2: any = performL2Validations(
     payload?.context?.action,
     payload,
@@ -174,9 +172,10 @@ const handleSelectRequest = async (payload: any) => {
     sendResponse(responsePayload, "on_select");
     return;
   }
-  await RedisService.setKey(
+  await setToCache(
     payload?.context?.transaction_id,
-    JSON.stringify(combined_data),
+    combined_data,
+    CACHE_DB_0
   );
 
   sendResponse(responsePayload, "on_select");

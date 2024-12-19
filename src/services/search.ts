@@ -3,9 +3,10 @@ import { resolveTemplate } from "../utils/template_parser";
 import on_search_1_template from "../templates/on_search_1.json";
 import on_search_2_template from "../templates/on_search_2.json";
 import { sendResponse } from "../utils/api";
-import { RedisService } from "ondc-automation-cache-lib";
 import stations from '../dataPaths/static_cache_data.json'
 import { start } from "repl";
+import { setToCache } from "../utils/redis";
+import { CACHE_DB_0 } from "../constants/contants";
 
 const createCustomRoute = (routeData: any[], startStationCode: string, endStationCode: string): any[] => {
   return routeData.map(route => {
@@ -93,10 +94,10 @@ const handleSearch2 = async (payload: any) => {
   const responsePayload = resolveTemplate(on_search_2_template, extarctedData_search);
   const extarctedData_on_search = extractPayloadData(responsePayload,"on_search_2");
   const combined_data = { ...extarctedData_search, ...extarctedData_on_search};
-  RedisService.useDb(0);
-  await RedisService.setKey(
+  await setToCache(
       payload?.context?.transaction_id,
-      JSON.stringify(combined_data),
+      combined_data,
+      CACHE_DB_0
     );
   sendResponse(responsePayload, "on_search");
 };

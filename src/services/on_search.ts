@@ -3,9 +3,9 @@ import { resolveTemplate } from "../utils/template_parser";
 import search_2_template from "../templates/search_2.json";
 import select from "../templates/select.json";
 import { sendResponse } from "../utils/api";
-import { RedisService } from "ondc-automation-cache-lib";
+import { getFromCache,setToCache } from "../utils/redis";
 import { generateRandomUUID } from "../utils/generate_uuids";
-import { json } from "body-parser";
+import { CACHE_DB_0 } from "../constants/contants";
 
 function getRandomStations(data: any) {
     // Flatten all stops across all fulfillments
@@ -74,8 +74,7 @@ const handleOnSearchRequest = async (payload: any) => {
 
 
   const handleOnSearchRequest1 = async (payload: any) => {
-    let cachedata: any = await RedisService.getKey(payload.context.transaction_id);
-    let json_cache_data = JSON.parse(cachedata)
+    let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
     //perform l2 validations with json_cache_data
     const extracted_data = extractPayloadData(payload, "on_search_1");
     extracted_data["transaction_id"] = generateRandomUUID()
@@ -90,8 +89,7 @@ const handleOnSearchRequest = async (payload: any) => {
   };
 
   const handleOnSearchRequest2 = async (payload: any) => {
-    let cachedata: any = await RedisService.getKey(payload.context.transaction_id);
-    let json_cache_data = JSON.parse(cachedata)
+    let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
     const extracted_data = extractPayloadData(payload, "on_search_2");
     extracted_data["message_id"] = generateRandomUUID()
     extracted_data["timestamp"] = new Date().toISOString();
@@ -102,10 +100,10 @@ const handleOnSearchRequest = async (payload: any) => {
     const combined_data = {...json_cache_data,...extracted_data}
     console.log(combined_data["item_ids"])
     const responsePayload = resolveTemplate(select, combined_data);
-    RedisService.useDb(0);
-    await RedisService.setKey(
+    await setToCache(
         payload.context.transaction_id,
-        JSON.stringify(combined_data),
+        combined_data,
+        CACHE_DB_0
       );
     sendResponse(responsePayload, "select");
   };

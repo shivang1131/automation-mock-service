@@ -3,14 +3,13 @@ import { resolveTemplate } from "../utils/template_parser";
 import on_init_template from "../templates/on_init.json";
 import error_template from "../templates/error_seller.json";
 import { sendResponse } from "../utils/api";
-import { RedisService } from "ondc-automation-cache-lib";
+import { getFromCache,setToCache } from "../utils/redis";
 import { performL2Validations } from "../L2-validations";
-import { json } from "body-parser";
+import { CACHE_DB_0 } from "../constants/contants";
 const handleInitRequest = async (payload: any) => {
 
   const extarctedData = extractPayloadData(payload, "init");
-  let cachedata: any = await RedisService.getKey(payload.context.transaction_id);
-  let json_cache_data = JSON.parse(cachedata)
+  let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
   const randomId = Math.random().toString(36).substring(2, 15);
   extarctedData["payments"]["id"] = randomId
   extarctedData["payments"]["params"] = {
@@ -42,10 +41,10 @@ const handleInitRequest = async (payload: any) => {
     sendResponse(responsePayload, "on_init");
     return;
   }
-  RedisService.useDb(0);
-  await RedisService.setKey(
+  await setToCache(
     payload?.context?.transaction_id,
-    JSON.stringify(combined_data),
+    combined_data,
+    CACHE_DB_0
   );
   sendResponse(responsePayload, "on_init");
 };
