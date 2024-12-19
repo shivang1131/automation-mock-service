@@ -6,7 +6,7 @@
           "code": "IND"
         },
         "city": {
-          "code": "std:080"
+          "code": "{{cityCode}}"
         }
       },
       "domain": "ONDC:TRV11",

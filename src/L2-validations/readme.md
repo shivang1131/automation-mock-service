@@ -32,7 +32,7 @@
 
 	- **condition Category_id_is_correctly_mapped**: $.message.order.payments[*].tags[?(@.descriptor.code=='BUYER_FINDER_FEES')].list[?(@.descriptor.code=='BUYER_FINDER_FEES_PERCENTAGE')].value must be equal to $._EXTERNAL.buyer_app_finder_fees
 	
-	- **condition Items_sent_in_init_and_select_are_the_same**: $.message.order.items[*].id must be equal to $._EXTERNAL.selected_ids
+	- **condition Items_sent_in_init_and_select_are_the_same**: $.message.order.items[*].id must be equal to $._EXTERNAL.selected_ids[*]
 
 - **on_init** : All the following sub conditions must pass as per the api requirement
 
@@ -40,7 +40,7 @@
 
 - **confirm** : All the following sub conditions must pass as per the api requirement
 
-	- **condition Items_sent_in_init_and_confirm_are_the_same**: $.message.order.items[*].id must be equal to $._EXTERNAL.selected_ids
+	- **condition Items_sent_in_init_and_confirm_are_the_same**: $.message.order.items[*].id must be equal to $._EXTERNAL.selected_ids[*]
 
 - **on_confirm** : All the following sub conditions must pass as per the api requirement
 

@@ -23,7 +23,7 @@ export default function confirm(input: validationInput): validationOutput {
                 );
                 const item_ids = payloadUtils.getJsonPath(
                     testObj,
-                    "$._EXTERNAL.selected_ids",
+                    "$._EXTERNAL.selected_ids[*]",
                 );
 
                 const validate = validations.equalTo(attr, item_ids);
@@ -33,7 +33,7 @@ export default function confirm(input: validationInput): validationOutput {
                         {
                             valid: false,
                             errorCode: 30000,
-                            description: `- **condition A**: $.message.order.items[*].id must be equal to $._EXTERNAL.selected_ids`,
+                            description: `- **condition A**: $.message.order.items[*].id must be equal to $._EXTERNAL.selected_ids[*]`,
                         },
                     ];
                 }
