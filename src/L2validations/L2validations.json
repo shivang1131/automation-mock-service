@@ -1,17 +1,37 @@
 {
     "on_search":[
         {
-            "_NAME_": "Check if name start codes are correct",
-            "start": "$.message.catalog.providers[0].fulfillments[*].stops[?(@.type == 'START')].location.descriptor.code",
-            "start_1": "$_EXTERNAL.start_code",
-            "_RETURN_": "start_1 all in start"
+            "_NAME_": "Buyer finder fees value is correct",
+            "buyer_finder_fees": "$.message.catalog.providers[*].payments[*].tags[?(@.descriptor.code == 'BUYER_FINDER_FEES')].list[?(@.descriptor.code == 'BUYER_FINDER_FEES_PERCENTAGE')].value",
+            "buyer_app_finder_fees": "$_EXTERNAL.buyer_app_finder_fees",
+            "_RETURN_": "buyer_finder_fees equal to buyer_app_finder_fees"
+        },
+        {
+            "_NAME_": "Vehicle category passed in is metro",
+            "vehicle": "$.message.catalog.providers[*].fulfillments[*].vehicle.category",
+            "vehicle_category": "$_EXTERNAL.vehicle_category",
+            "_RETURN_": "vehicle_category all in vehicle"
+        },
+        {
+            "_NAME_": "Start code matches the search call",
+            "start_code": "$.message.catalog.providers[0].fulfillments[0].stops[?(@.type == 'START')].location.descriptor.code",
+            "start": "$_EXTERNAL.start_code",
+            "_RETURN_": "start_code all in start",
+            "_CONTINUE_": "start is NULL check this"
+        },
+        {
+            "_NAME_": "End code matches the search call",
+            "end_code": "$.message.catalog.providers[0].fulfillments[0].stops[?(@.type == 'END')].location.descriptor.code",
+            "end": "$_EXTERNAL.end_code",
+            "_RETURN_": "end_cooe all in end",
+            "_CONTINUE_": "end is NULL CHECK THIS"
         }
     ],
     "select": [
             {
             "_NAME_": "check id selected", 
 			"attr": "$.message.order.items[*].id",
-            "ids": "$._EXTERNAL.item_ids",
+            "ids": "$._EXTERNAL.selected_ids",
 			"_RETURN_": "attr all in ids"
             }
         ],
@@ -23,10 +43,10 @@
 			"_RETURN_": "attr all in category_ids"
             },
             {
-                "_NAME_": "Fulfillments are correctly mapped", 
-                "attr": "$.message.order.items[*].fulfillment_ids[*]",
-                "fulfillments": "$.message.order.fulfillments[*].id",
-                "_RETURN_": "attr all in fulfillments" 
+            "_NAME_": "Fulfillments are correctly mapped", 
+            "attr": "$.message.order.items[*].fulfillment_ids[*]",
+            "fulfillments": "$.message.order.fulfillments[*].id",
+            "_RETURN_": "attr all in fulfillments" 
             }
         ],
         "init": [
@@ -39,7 +59,7 @@
             {
                 "_NAME_": "Items sent in init and select are the same", 
                 "attr": "$.message.order.items[*].id",
-                "item_ids": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
+                "item_ids": "$._EXTERNAL.selected_ids",
                 "_RETURN_": "attr equal item_ids" 
             }
         ],
@@ -55,7 +75,7 @@
             {
                 "_NAME_": "Items sent in init and confirm are the same", 
                 "attr": "$.message.order.items[*].id",
-                "item_ids": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
+                "item_ids": "$._EXTERNAL.selected_ids",
                 "_RETURN_": "attr equal item_ids" 
             },
             {
@@ -78,22 +98,5 @@
                 "price": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
                 "_RETURN_": "attr equal price" 
             }
-        ],
-        "status": [
-            {
-                "_NAME_": "Order id should exist", 
-                "attr": "$.message.order_id",
-                "order_id": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
-                "_RETURN_": "attr equal order_id" 
-            }
-        ],
-        "on_status": [
-            {
-                "_NAME_": "Order id should match the order id ", 
-                "attr": "$.message.order.id",
-                "order_id": "$._EXTERNAL.maximum_quantity NEED TO CHANGE",
-                "_RETURN_": "attr equal order_id" 
-            }
         ]
-
 }

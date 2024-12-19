@@ -74,6 +74,9 @@ const handleOnSearchRequest = async (payload: any) => {
 
 
   const handleOnSearchRequest1 = async (payload: any) => {
+    let cachedata: any = await RedisService.getKey(payload.context.transaction_id);
+    let json_cache_data = JSON.parse(cachedata)
+    //perform l2 validations with json_cache_data
     const extracted_data = extractPayloadData(payload, "on_search_1");
     extracted_data["transaction_id"] = generateRandomUUID()
     extracted_data["message_id"] = generateRandomUUID()
@@ -83,11 +86,6 @@ const handleOnSearchRequest = async (payload: any) => {
     extracted_data["start_station"] = start_station
     extracted_data["end_station"] = end_station
     RedisService.useDb(0);
-    await RedisService.setKey(
-        extracted_data["transaction_id"],
-        JSON.stringify(extracted_data),
-      );
-      
     const responsePayload = resolveTemplate(search_2_template, extracted_data);
 
     sendResponse(responsePayload, "search");

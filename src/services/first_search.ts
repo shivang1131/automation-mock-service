@@ -15,7 +15,12 @@ const initiateFirstSearch = async (payload: any) => {
         extracted_data["timestamp"] = new Date().toISOString()
         extracted_data["city_code"] = payload?.city_code
         extracted_data["subscriber"] = subscriber_url
-        const responsePayload = resolveTemplate(search_1, extracted_data,);
+        RedisService.useDb(0);
+        await RedisService.setKey(
+            payload?.context?.transaction_id,
+            JSON.stringify(extracted_data),
+        );
+        const responsePayload = resolveTemplate(search_1, extracted_data);
         sendResponse(responsePayload, "search",{ subscriberUrl: subscriber_url});
         }
   };
