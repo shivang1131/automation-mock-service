@@ -213,17 +213,3 @@ export default handleSelectRequest;
 
 
 
-
-
-
-
-// console.log(l2);
-  // if (!l2.valid) {
-  //   const responsePayload = resolveTemplate(error_template, {
-  //     ...extarctedData,
-  //     action: "on_select",
-  //     error: l2.error,
-  //   });
-  //   sendResponse(responsePayload, "select");
-  //   return;
-  // }

@@ -100,7 +100,6 @@ const handleOnSearchRequest = async (payload: any) => {
     const chosen_items = getRandomItemsWithQuantities(items_min_max)
     extracted_data["chosen_items"] = chosen_items
     const combined_data = {...json_cache_data,...extracted_data}
-    // combined_data["item_ids"] = combined_data["item_ids"].flat()
     console.log(combined_data["item_ids"])
     const responsePayload = resolveTemplate(select, combined_data);
     RedisService.useDb(0);
