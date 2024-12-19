@@ -21,7 +21,7 @@ export default function select(input: validationInput): validationOutput {
                 );
                 const ids = payloadUtils.getJsonPath(
                     testObj,
-                    "$._EXTERNAL.item_ids",
+                    "$._EXTERNAL.item_ids[*]",
                 );
 
                 const validate = validations.allIn(attr, ids);
@@ -31,7 +31,7 @@ export default function select(input: validationInput): validationOutput {
                         {
                             valid: false,
                             errorCode: 30000,
-                            description: `- **condition A**: every element of $.message.order.items[*].id must be in $._EXTERNAL.item_ids`,
+                            description: `- **condition A**: every element of $.message.order.items[*].id must be in $._EXTERNAL.item_ids[*]`,
                         },
                     ];
                 }

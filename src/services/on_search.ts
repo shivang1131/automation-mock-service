@@ -10,7 +10,7 @@ import { json } from "body-parser";
 function getRandomStations(data: any) {
     // Flatten all stops across all fulfillments
     const allStops = data.flatMap((fulfillment: any) => fulfillment.stops);
-  
+
     // Get two unique random indices
     let firstIndex = Math.floor(Math.random() * allStops.length);
     let secondIndex;
@@ -82,7 +82,7 @@ const handleOnSearchRequest = async (payload: any) => {
     extracted_data["message_id"] = generateRandomUUID()
     extracted_data["timestamp"] = new Date().toISOString();
     extracted_data["city_code"] = payload?.city_code
-    const { start_station, end_station } = getRandomStations(extracted_data["fulfillments"]);
+    const { start_station, end_station } = getRandomStations([extracted_data["fulfillments"]]);
     extracted_data["start_station"] = start_station
     extracted_data["end_station"] = end_station
     const responsePayload = resolveTemplate(search_2_template, extracted_data);
@@ -96,11 +96,13 @@ const handleOnSearchRequest = async (payload: any) => {
     const extracted_data = extractPayloadData(payload, "on_search_2");
     extracted_data["message_id"] = generateRandomUUID()
     extracted_data["timestamp"] = new Date().toISOString();
-    const items = json_cache_data?.item_ids
+    const items = json_cache_data?.items
     const items_min_max = transformToItemFormat(items)
     const chosen_items = getRandomItemsWithQuantities(items_min_max)
     extracted_data["chosen_items"] = chosen_items
     const combined_data = {...json_cache_data,...extracted_data}
+    combined_data["item_ids"] = combined_data["item_ids"].flat()
+    console.log(combined_data["item_ids"])
     const responsePayload = resolveTemplate(select, combined_data);
     RedisService.useDb(0);
     await RedisService.setKey(

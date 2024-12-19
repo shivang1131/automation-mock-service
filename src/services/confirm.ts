@@ -100,7 +100,7 @@ const handleConfirmRequest = async (payload: any) => {
   if (!l2[0].valid) {
     const combined_errors = {"errors": l2}
     const responsePayload = resolveTemplate(error_template, {
-      ...extarctedData,
+      ...combined_data,
       action: "on_confirm",
       error: combined_errors,
     });

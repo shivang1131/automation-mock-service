@@ -82,7 +82,7 @@ const handleSearch1 = async (payload: any) => {
 const handleSearch2 = async (payload: any) => {
 
   const extarctedData_search = extractPayloadData(payload, "search_2");
-  
+
   const city_code = extarctedData_search["cityCode"]
   const route = stations[city_code as keyof typeof stations]
   const start_code = extarctedData_search["start_code"]

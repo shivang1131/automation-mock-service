@@ -5,7 +5,7 @@
         "code": "IND"
       },
       "city": {
-        "code": "std:080"
+        "code": "{{cityCode}}"
       }
     },
     "domain": "ONDC:TRV11",
@@ -59,7 +59,7 @@
           "fulfillments": "{{fulfillments}}",
           "payments": [
             {
-              "collected_by": "BPP",
+              "collected_by": "BAP",
               "tags": [
                 {
                   "descriptor": {

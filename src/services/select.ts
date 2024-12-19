@@ -165,8 +165,9 @@ const handleSelectRequest = async (payload: any) => {
   );
   if (!l2[0].valid) {
     const combined_errors = {"errors": l2}
+    console.log(l2)
     const responsePayload = resolveTemplate(error_template, {
-      ...extarctedData,
+      ...combined_data,
       action: "on_select",
       error: combined_errors,
     });
