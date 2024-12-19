@@ -16,6 +16,7 @@ export type ExternalData = {
     end_code?: string[];
     selected_ids?: string[];
     category_ids?: string[];
+    item_ids?: string[];
 };
 
 export type validationInput = {

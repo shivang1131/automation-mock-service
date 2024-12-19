@@ -85,7 +85,6 @@ const handleOnSearchRequest = async (payload: any) => {
     const { start_station, end_station } = getRandomStations(extracted_data["fulfillments"]);
     extracted_data["start_station"] = start_station
     extracted_data["end_station"] = end_station
-    RedisService.useDb(0);
     const responsePayload = resolveTemplate(search_2_template, extracted_data);
 
     sendResponse(responsePayload, "search");

@@ -2,7 +2,6 @@
 import fs from 'fs';
 import jsonpath from 'jsonpath';
 import { RedisService } from "ondc-automation-cache-lib";
-import { performL2Validations } from './validations/l2-validations';
 import { resolveTemplate } from './utils/template_parser';
 import on_search_template from './templates/on_search_1.json'
 import path from 'path';

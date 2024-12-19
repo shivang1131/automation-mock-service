@@ -4,7 +4,8 @@ import on_confirm_template from "../templates/on_confirm.json";
 import { sendResponse } from "../utils/api";
 import { RedisService } from "ondc-automation-cache-lib";
 import { randomBytes } from "crypto";
-
+import { performL2Validations } from "../L2-validations";
+import error_template from "../templates/error_seller.json";
 function generateQrToken(): string {
   return randomBytes(32).toString("base64");
 }
@@ -90,6 +91,22 @@ const handleConfirmRequest = async (payload: any) => {
     payload?.context?.transaction_id,
     JSON.stringify(combined_data),
   );
+  const l2: any = performL2Validations(
+    payload?.context?.action,
+    payload,
+    true,
+    combined_data
+  );
+  if (!l2[0].valid) {
+    const combined_errors = {"errors": l2}
+    const responsePayload = resolveTemplate(error_template, {
+      ...extarctedData,
+      action: "on_confirm",
+      error: combined_errors,
+    });
+    sendResponse(responsePayload, "on_confirm");
+    return;
+  }
   sendResponse(responsePayload, "on_confirm");
 };
 

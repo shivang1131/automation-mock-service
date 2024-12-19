@@ -20,7 +20,7 @@
 
 - **select** : All the following sub conditions must pass as per the api requirement
 
-	- **condition check_id_selected**: every element of $.message.order.items[*].id must be in $._EXTERNAL.selected_ids
+	- **condition check_id_selected**: every element of $.message.order.items[*].id must be in $._EXTERNAL.item_ids
 
 - **on_select** : All the following sub conditions must pass as per the api requirement
 
