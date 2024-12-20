@@ -5,7 +5,7 @@ import error_template from "../templates/error_seller.json";
 import { sendResponse } from "../utils/api";
 import { getFromCache,setToCache } from "../utils/redis";
 import { performL2Validations } from "../L2-validations";
-import { CACHE_DB_0 } from "../constants/contants";
+import { CACHE_DB_0 } from "../constants/constants";
 const handleInitRequest = async (payload: any) => {
 
   const extarctedData = extractPayloadData(payload, "init");

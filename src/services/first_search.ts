@@ -4,7 +4,7 @@ import { sendResponse } from "../utils/api";
 import { setToCache } from "../utils/redis";
 import search_1 from "../templates/search_1.json";
 import { generateRandomUUID } from "../utils/generate_uuids";
-import { CACHE_DB_0 } from "../constants/contants";
+import { CACHE_DB_0 } from "../constants/constants";
 
 const initiateFirstSearch = async (payload: any) => {
 
@@ -14,7 +14,7 @@ const initiateFirstSearch = async (payload: any) => {
         extracted_data["transaction_id"] = generateRandomUUID()
         extracted_data["message_id"] = generateRandomUUID()
         extracted_data["timestamp"] = new Date().toISOString()
-        extracted_data["cityCode"] = payload?.city_code
+        extracted_data["cityCode"] = payload?.city_code ?? "std:011"
         extracted_data["subscriber"] = subscriber_url
         await setToCache(
             payload?.context?.transaction_id,
