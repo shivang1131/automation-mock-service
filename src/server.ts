@@ -6,15 +6,19 @@ import jsonPath from "jsonpath";
 import { RedisService } from "ondc-automation-cache-lib";
 import apiRouter from "./routes";
 import router from "./routes/trigger";
+import logger from "./utils/logger";
 
-RedisService.useDb(0);
+
+RedisService.useDb(1);
 
 const app = express();
+
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Routes
 app.use("/api", apiRouter);
@@ -31,5 +35,5 @@ app.listen(PORT, () => {
     },
   };
 
-  console.log(`Server running at ${PORT}`);
+  logger.info(`Server running at ${PORT}`);
 });

@@ -1,5 +1,4 @@
-
-  {
+{
     "context": {
       "location": {
         "country": {
@@ -10,23 +9,16 @@
         }
       },
       "domain": "ONDC:TRV11",
-      "action": "select",
-      "version": "2.0.1",
-      "bap_id": "dev-automation.ondc.org",
-      "bap_uri": "https://dev-automation.ondc.org/buyer",
+      "action": "{{action}}",
+      "version": "2.0.0",
       "bpp_id": "{{bpp_id}}",
+      "bap_uri": "https://dev-automation.ondc.org/buyer",
+      "bap_id": "dev-automation.ondc.org",
       "bpp_uri": "{{bpp_uri}}",
       "transaction_id": "{{transaction_id}}",
       "message_id": "{{message_id}}",
       "timestamp": "{{timestamp}}",
       "ttl": "PT30S"
     },
-    "message": {
-      "order": {
-        "items": "{{chosen_items}}",
-        "provider": {
-          "id": "P1"
-        }
-      }
-    }
+    "error": "{{error}}"
   }

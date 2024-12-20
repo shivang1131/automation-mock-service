@@ -5,14 +5,14 @@
           "code": "IND"
         },
         "city": {
-          "code": "std:080"
+          "code": "{{cityCode}}"
         }
       },
       "domain": "ONDC:TRV11",
-      "timestamp": "2024-12-18T06:59:39.136Z",
+      "timestamp": "{{timestamp}}",
       "bap_id": "dev-automation.ondc.org",
-      "transaction_id": "6943e9e2-4fb5-487c-92b7-13ba8018f176",
-      "message_id": "8743e9e2-4fb5-487c-92b7-13ba8018f177",
+      "transaction_id": "{{transaction_id}}",
+      "message_id": "{{message_id}}",
       "version": "2.0.1",
       "action": "search",
       "bap_uri": "https://dev-automation.ondc.org/buyer",

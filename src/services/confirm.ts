@@ -2,8 +2,11 @@ import extractPayloadData from "../utils/extract-payload-data";
 import { resolveTemplate } from "../utils/template_parser";
 import on_confirm_template from "../templates/on_confirm.json";
 import { sendResponse } from "../utils/api";
-import { RedisService } from "ondc-automation-cache-lib";
+import { getFromCache,setToCache } from "../utils/redis";
 import { randomBytes } from "crypto";
+import { performL2Validations } from "../L2-validations";
+import error_template from "../templates/error_seller.json";
+import { CACHE_DB_0 } from "../constants/contants";
 
 function generateQrToken(): string {
   return randomBytes(32).toString("base64");
@@ -62,9 +65,7 @@ function updateFulfillmentsWithParentInfo(fulfillments: any[]): void {
 const handleConfirmRequest = async (payload: any) => {
 
   const extarctedData = extractPayloadData(payload, "confirm");
-  let cachedata: any = await RedisService.getKey(payload.context.transaction_id);
-  let json_cache_data = JSON.parse(cachedata)
-
+  let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
   const randomId = Math.random().toString(36).substring(2, 15);
   extarctedData["order_id"] = randomId
   extarctedData["updated_payments"]["params"] = {
@@ -85,10 +86,27 @@ const handleConfirmRequest = async (payload: any) => {
   extarctedData["timestamp"] = new Date().toISOString();
   const combined_data = { ...json_cache_data, ...extarctedData}
   const responsePayload = resolveTemplate(on_confirm_template, combined_data);
-  await RedisService.setKey(
+  await setToCache(
     payload?.context?.transaction_id,
-    JSON.stringify(combined_data),
+    combined_data,
+    CACHE_DB_0
   );
+  const l2: any = performL2Validations(
+    payload?.context?.action,
+    payload,
+    true,
+    combined_data
+  );
+  if (!l2[0].valid) {
+    const combined_errors = {"errors": l2}
+    const responsePayload = resolveTemplate(error_template, {
+      ...combined_data,
+      action: "on_confirm",
+      error: combined_errors,
+    });
+    sendResponse(responsePayload, "on_confirm");
+    return;
+  }
   sendResponse(responsePayload, "on_confirm");
 };
 

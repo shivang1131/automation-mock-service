@@ -1,12 +1,11 @@
 import extractPayloadData from "../utils/extract-payload-data";
 import { resolveTemplate } from "../utils/template_parser";
 import on_select_template from "../templates/on_select.json";
-import error_template from "../templates/error.json";
+import error_template from "../templates/error_seller.json";
 import { sendResponse } from "../utils/api";
-import { performL2Validations } from "../validations/l2-validations";
-import { RedisService } from "ondc-automation-cache-lib";
-import { json } from "body-parser";
-
+import { performL2Validations } from "../L2-validations";
+import { setToCache,getFromCache } from "../utils/redis";
+import { CACHE_DB_0 } from "../constants/constants";
 
 
 function createAndAppendFulfillments(items: any[], fulfillments: any[]): void {
@@ -129,18 +128,14 @@ const handleSelectRequest = async (payload: any) => {
     return items.filter(item => idsToFilter.includes(item.id));
 };
   extarctedData["ids_with_quantities"] = ids_with_quantities
-  // const l2 = await performL2Validations(
-  //   payload?.context?.action,
-  //   payload,
-  //   extarctedData
-  // );
+
   // store in cache
   // valdiation
   // if(l2.template) { return }
 
 
-  let cachedata: any = await RedisService.getKey(payload.context.transaction_id);
-  let json_cache_data = JSON.parse(cachedata)
+  let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
+  if(!json_cache_data){throw new Error("Cache data not found at select action")}
   json_cache_data.items = filterItemsBySelectedIds(json_cache_data.items,extarctedData["selected_ids"])
   json_cache_data.fulfillments = getUniqueFulfillmentIdsAndFilterFulfillments(json_cache_data.items,json_cache_data.fulfillments)
   const updatedItems = json_cache_data.items.map((item: any) => ({
@@ -160,9 +155,26 @@ const handleSelectRequest = async (payload: any) => {
   extarctedData["timestamp"] = new Date().toISOString();
   const combined_data = { ...json_cache_data, ...extarctedData };
   const responsePayload = resolveTemplate(on_select_template, combined_data);
-  await RedisService.setKey(
+  const l2: any = performL2Validations(
+    payload?.context?.action,
+    payload,
+    true,
+    combined_data
+  );
+  if (!l2[0].valid) {
+    const combined_errors = {"errors": l2}
+    const responsePayload = resolveTemplate(error_template, {
+      ...combined_data,
+      action: "on_select",
+      error: combined_errors,
+    });
+    sendResponse(responsePayload, "on_select");
+    return;
+  }
+  await setToCache(
     payload?.context?.transaction_id,
-    JSON.stringify(combined_data),
+    combined_data,
+    CACHE_DB_0
   );
 
   sendResponse(responsePayload, "on_select");
@@ -199,17 +211,3 @@ export default handleSelectRequest;
 
 
 
-
-
-
-
-// console.log(l2);
-  // if (!l2.valid) {
-  //   const responsePayload = resolveTemplate(error_template, {
-  //     ...extarctedData,
-  //     action: "on_select",
-  //     error: l2.error,
-  //   });
-  //   sendResponse(responsePayload, "select");
-  //   return;
-  // }

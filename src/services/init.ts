@@ -1,14 +1,15 @@
 import extractPayloadData from "../utils/extract-payload-data";
 import { resolveTemplate } from "../utils/template_parser";
 import on_init_template from "../templates/on_init.json";
+import error_template from "../templates/error_seller.json";
 import { sendResponse } from "../utils/api";
-import { RedisService } from "ondc-automation-cache-lib";
-import { json } from "body-parser";
+import { getFromCache,setToCache } from "../utils/redis";
+import { performL2Validations } from "../L2-validations";
+import { CACHE_DB_0 } from "../constants/contants";
 const handleInitRequest = async (payload: any) => {
 
   const extarctedData = extractPayloadData(payload, "init");
-  let cachedata: any = await RedisService.getKey(payload.context.transaction_id);
-  let json_cache_data = JSON.parse(cachedata)
+  let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
   const randomId = Math.random().toString(36).substring(2, 15);
   extarctedData["payments"]["id"] = randomId
   extarctedData["payments"]["params"] = {
@@ -24,10 +25,26 @@ const handleInitRequest = async (payload: any) => {
   extarctedData["timestamp"] = new Date().toISOString();
   const combined_data = { ...json_cache_data, ...extarctedData}
   const responsePayload = resolveTemplate(on_init_template, combined_data);
-
-  await RedisService.setKey(
+  const l2: any = performL2Validations(
+    payload?.context?.action,
+    payload,
+    true,
+    combined_data
+  );
+  if (!l2[0].valid) {
+    const combined_errors = {"errors": l2}
+    const responsePayload = resolveTemplate(error_template, {
+      ...combined_data,
+      action: "on_init",
+      error: combined_errors,
+    });
+    sendResponse(responsePayload, "on_init");
+    return;
+  }
+  await setToCache(
     payload?.context?.transaction_id,
-    JSON.stringify(combined_data),
+    combined_data,
+    CACHE_DB_0
   );
   sendResponse(responsePayload, "on_init");
 };

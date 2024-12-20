@@ -8,7 +8,6 @@ apiRouter.post("/:action", handleRequest);
 
 apiRouter.post("/trigger",triggerevent )
 
-// router.post("/seller/:action",handleBPPrequest)
 
 
 export default apiRouter;
