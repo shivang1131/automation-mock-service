@@ -6,7 +6,7 @@ import { sendResponse } from "../utils/api";
 import stations from '../dataPaths/static_cache_data.json'
 import { start } from "repl";
 import { setToCache } from "../utils/redis";
-import { CACHE_DB_0 } from "../constants/contants";
+import { CACHE_DB_0 } from "../constants/constants";
 
 const createCustomRoute = (routeData: any[], startStationCode: string, endStationCode: string): any[] => {
   return routeData.map(route => {

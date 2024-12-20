@@ -5,7 +5,7 @@ import select from "../templates/select.json";
 import { sendResponse } from "../utils/api";
 import { getFromCache,setToCache } from "../utils/redis";
 import { generateRandomUUID } from "../utils/generate_uuids";
-import { CACHE_DB_0 } from "../constants/contants";
+import { CACHE_DB_0 } from "../constants/constants";
 
 function getRandomStations(data: any) {
     // Flatten all stops across all fulfillments

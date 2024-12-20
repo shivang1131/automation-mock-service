@@ -6,7 +6,7 @@ import { getFromCache,setToCache } from "../utils/redis";
 import { randomBytes } from "crypto";
 import { performL2Validations } from "../L2-validations";
 import error_template from "../templates/error_seller.json";
-import { CACHE_DB_0 } from "../constants/contants";
+import { CACHE_DB_0 } from "../constants/constants";
 
 function generateQrToken(): string {
   return randomBytes(32).toString("base64");

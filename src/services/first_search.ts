@@ -4,7 +4,7 @@ import { sendResponse } from "../utils/api";
 import { setToCache } from "../utils/redis";
 import search_1 from "../templates/search_1.json";
 import { generateRandomUUID } from "../utils/generate_uuids";
-import { CACHE_DB_0 } from "../constants/contants";
+import { CACHE_DB_0 } from "../constants/constants";
 
 const initiateFirstSearch = async (payload: any) => {
 
