@@ -124,12 +124,6 @@
                         "code": "BUYER_FINDER_FEES_PERCENTAGE"
                       },
                       "value": "{{buyer_app_finder_fees}}"
-                    },
-                    {
-                      "descriptor": {
-                        "code": "BUYER_FINDER_FEES_TYPE"
-                      },
-                      "value": "percent"
                     }
                   ]
                 },

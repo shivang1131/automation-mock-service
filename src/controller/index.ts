@@ -16,29 +16,37 @@ export const handleRequest = async(req:Request, res: Response): Promise<any> => 
     const payload = req.body;
     switch (action) {
       case "search":
-        await handleSerachRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("search");
+        handleSerachRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "select":
-        await handleSelectRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("select");
+        handleSelectRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "init":
-        await handleInitRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("init");
+        handleInitRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "confirm":
-        await handleConfirmRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("confirm");
+        handleConfirmRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "on_search":
-        await handleOnSearchRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("on_search");
+        handleOnSearchRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "on_select":
-        await handleOnSelectRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("on_select");
+        handleOnSelectRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "on_init":
-        await handleOnInitRequest(payload);
-        return res.status(200).json({ status: "success" });
-      case "on_confirm":
-        await handleOnConfirmRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("on_init");
+        handleOnInitRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
+        case "on_confirm":
+          logger.infologger.info("on_confirm");
+          handleOnConfirmRequest(payload);
+          return res.status(200).json({ message: {ack: { status: "ACK" }}});
       default:
         throw new Error(`Invalid request type ${action}`);
     }
@@ -56,17 +64,21 @@ export const handleBAPRequest = async (req: Request, res: Response): Promise<any
     const payload = req.body;
     switch (action) {
       case "search":
-        await handleSerachRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.infologger.info("search");
+        handleSerachRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "select":
-        await handleSelectRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.infologger.info("select");
+        handleSelectRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "init":
-        await handleInitRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.infologger.info("init");
+        handleInitRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "confirm":
-        await handleConfirmRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.infologger.info("confirm");
+        handleConfirmRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       default:
         throw new Error(`Invalid request type ${action}`);
     }
@@ -84,14 +96,17 @@ export const handleBPPrequest = async (req: Request, res: Response): Promise<any
     const payload = req.body;
     switch (action) {
       case "on_search":
-        await handleOnSearchRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("on_search");
+        handleOnSearchRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "on_select":
-        await handleOnSelectRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("on_select");
+        handleOnSelectRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "on_init":
-        await handleOnInitRequest(payload);
-        return res.status(200).json({ status: "success" });
+        logger.info("on_init");
+        handleOnInitRequest(payload);
+        return res.status(200).json({ message: {ack: { status: "ACK" }}});
       default:
         throw new Error(`Invalid request type ${action}`);
     }
@@ -107,8 +122,9 @@ export const handleBPPrequest = async (req: Request, res: Response): Promise<any
 export const triggerevent = async (req: Request, res: Response): Promise<any> => {
   try {
     const payload = req.body;
-      await initiateFirstSearch(payload)
-      return res.status(200).json({ status: "success" });
+    logger.info("Initiating first search request")
+      initiateFirstSearch(payload)
+      return res.status(200).json({ message: {ack: { status: "ACK" }}});
   } catch (e: any) {
     res
       .status(400)

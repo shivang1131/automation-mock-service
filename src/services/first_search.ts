@@ -14,7 +14,7 @@ const initiateFirstSearch = async (payload: any) => {
         extracted_data["transaction_id"] = generateRandomUUID()
         extracted_data["message_id"] = generateRandomUUID()
         extracted_data["timestamp"] = new Date().toISOString()
-        extracted_data["cityCode"] = payload?.city_code
+        extracted_data["cityCode"] = payload?.city_code ?? "std:011"
         extracted_data["subscriber"] = subscriber_url
         await setToCache(
             payload?.context?.transaction_id,
