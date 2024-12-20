@@ -44,7 +44,7 @@ export const handleRequest = async(req:Request, res: Response): Promise<any> => 
         handleOnInitRequest(payload);
         return res.status(200).json({ message: {ack: { status: "ACK" }}});
         case "on_confirm":
-          logger.infologger.info("on_confirm");
+          logger.info("on_confirm");
           handleOnConfirmRequest(payload);
           return res.status(200).json({ message: {ack: { status: "ACK" }}});
       default:
@@ -64,19 +64,19 @@ export const handleBAPRequest = async (req: Request, res: Response): Promise<any
     const payload = req.body;
     switch (action) {
       case "search":
-        logger.infologger.info("search");
+        logger.info("search");
         handleSerachRequest(payload);
         return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "select":
-        logger.infologger.info("select");
+        logger.info("select");
         handleSelectRequest(payload);
         return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "init":
-        logger.infologger.info("init");
+        logger.info("init");
         handleInitRequest(payload);
         return res.status(200).json({ message: {ack: { status: "ACK" }}});
       case "confirm":
-        logger.infologger.info("confirm");
+        logger.info("confirm");
         handleConfirmRequest(payload);
         return res.status(200).json({ message: {ack: { status: "ACK" }}});
       default:
