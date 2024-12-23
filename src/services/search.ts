@@ -7,6 +7,7 @@ import stations from '../dataPaths/static_cache_data.json'
 import { start } from "repl";
 import { setToCache } from "../utils/redis";
 import { CACHE_DB_0 } from "../constants/constants";
+import logger from "../utils/logger";
 
 const createCustomRoute = (routeData: any[], startStationCode: string, endStationCode: string): any[] => {
   return routeData.map(route => {
@@ -99,6 +100,7 @@ const handleSearch2 = async (payload: any) => {
       combined_data,
       CACHE_DB_0
     );
+    logger.info(combined_data)
   sendResponse(responsePayload, "on_search");
 };
 

@@ -94,6 +94,7 @@ const handleOnSearchRequest = async (payload: any) => {
 
   const handleOnSearchRequest2 = async (payload: any) => {
     let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
+
     const extracted_data = extractPayloadData(payload, "on_search_2");
     logger.info(json_cache_data, "json_cache_data")
     extracted_data["message_id"] = generateRandomUUID()
