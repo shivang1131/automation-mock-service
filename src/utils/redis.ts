@@ -6,6 +6,7 @@ export const getFromCache = async (key: string,db: number): Promise<any> => {
     try{
       RedisService.useDb(db);
       let cacheData = await RedisService.getKey(key);
+      logger.info(cacheData)
       cacheData = cacheData && canBeParsed(cacheData) ? JSON.parse(cacheData) : cacheData ;
       return cacheData;
   }
@@ -18,6 +19,7 @@ export const getFromCache = async (key: string,db: number): Promise<any> => {
 export const setToCache = async (key: string, value: object | any[] | string| number| boolean , db:number): Promise<any> => {
     try{
       const cacheData : string = typeof value === 'string' ? value : JSON.stringify(value);
+      logger.info(cacheData)
       RedisService.useDb(db);
       await RedisService.setKey(key, cacheData);
     }

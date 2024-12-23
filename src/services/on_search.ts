@@ -96,11 +96,9 @@ const handleOnSearchRequest = async (payload: any) => {
     let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
 
     const extracted_data = extractPayloadData(payload, "on_search_2");
-    logger.info(json_cache_data, "json_cache_data")
     extracted_data["message_id"] = generateRandomUUID()
     extracted_data["timestamp"] = new Date().toISOString();
     const items = json_cache_data?.items
-    logger.info(items,"items")
     const items_min_max = transformToItemFormat(items)
     const chosen_items = getRandomItemsWithQuantities(items_min_max)
     extracted_data["chosen_items"] = chosen_items
