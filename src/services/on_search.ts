@@ -94,6 +94,7 @@ const handleOnSearchRequest = async (payload: any) => {
 
   const handleOnSearchRequest2 = async (payload: any) => {
     let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_2);
+    logger.info(json_cache_data)
     const extracted_data = extractPayloadData(payload, "on_search_2");
     extracted_data["message_id"] = generateRandomUUID()
     extracted_data["timestamp"] = new Date().toISOString();
@@ -103,7 +104,6 @@ const handleOnSearchRequest = async (payload: any) => {
     extracted_data["chosen_items"] = chosen_items
     const combined_data = {...json_cache_data,...extracted_data}
     const responsePayload = resolveTemplate(select, combined_data);
-    logger.info(combined_data)
     await setToCache(
         payload.context.transaction_id,
         combined_data,
