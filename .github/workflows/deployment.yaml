@@ -1,0 +1,51 @@
+name: ondc Deployment
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  ssh-ec2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH Setup and Cloning Repository
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ./key.pem
+          chmod 600 ./key.pem
+          mkdir -p ~/.ssh
+          ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+          ssh -i ./key.pem ${{ secrets.SSH_USERNAME }}@${{ secrets.HOST }} -T <<EOF
+          if [ -d "~/ONDC-automation-framework/automation-mock-service" ]; then
+            echo "Repository already exists, cleaning up"
+            cd ~/ONDC-automation-framework/automation-mock-service && git pull origin main
+          else
+            echo "Cloning repository"
+            git clone https://github.com/ONDC-Official/automation-mock-service.git ~/ONDC-automation-framework/automation-mock-service
+          fi
+          EOF
+
+      - name: Write secrets to .env
+        run: |
+          echo "Writing secrets to .env file in the correct directory"
+          ssh -i ./key.pem ${{ secrets.SSH_USERNAME }}@${{ secrets.HOST }} <<EOF
+          echo "REDIS_USERNAME=${{ secrets.REDIS_USERNAME }}" >> ~/ONDC-automation-framework/automation-mock-service/.env
+          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> ~/ONDC-automation-framework/automation-mock-service/.env
+          echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> ~/ONDC-automation-framework/automation-mock-service/.env
+          echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> ~/ONDC-automation-framework/automation-mock-service/.env
+          echo "PORT=${{ secrets.PORT }}" >> ~/ONDC-automation-framework/automation-mock-service/.env
+          echo "API_SERVICE_LAYER=${{ secrets.API_SERVICE_LAYER }}" >> ~/ONDC-automation-framework/automation-mock-service/.env
+          EOF
+
+      - name: Automation Mock Server Deployment
+        run: |
+          ssh -o ServerAliveInterval=30 -o TCPKeepAlive=yes -T -i ./key.pem ${{ secrets.SSH_USERNAME }}@${{ secrets.HOST }} <<EOF
+          ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+          cd ~/ONDC-automation-framework/automation-mock-service
+          cp ~/.env ~/ONDC-automation-framework/automation-mock-service/
+          sudo docker-compose up -d --build
+          EOF
