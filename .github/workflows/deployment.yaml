@@ -42,7 +42,7 @@ jobs:
       - name: Automation Mock Server Deployment
         run: |
           echo "Deploying with Docker Compose"
-          ssh -T -i ./key.pem ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} <<EOF
+          ssh -i ./key.pem ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} <<EOF
           cd ~/ONDC-automation-framework/automation-mock-service
 
           if [ ! -f .env ]; then
