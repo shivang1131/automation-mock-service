@@ -5,11 +5,11 @@ import error_template from "../templates/error_seller.json";
 import { sendResponse } from "../utils/api";
 import { getFromCache,setToCache } from "../utils/redis";
 import { performL2Validations } from "../L2-validations";
-import { CACHE_DB_0 } from "../constants/constants";
+import { CACHE_DB_2 } from "../constants/constants";
 const handleInitRequest = async (payload: any) => {
 
   const extarctedData = extractPayloadData(payload, "init");
-  let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
+  let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_2);
   const randomId = Math.random().toString(36).substring(2, 15);
   extarctedData["payments"]["id"] = randomId
   extarctedData["payments"]["params"] = {
@@ -44,7 +44,7 @@ const handleInitRequest = async (payload: any) => {
   await setToCache(
     payload?.context?.transaction_id,
     combined_data,
-    CACHE_DB_0
+    CACHE_DB_2
   );
   sendResponse(responsePayload, "on_init");
 };

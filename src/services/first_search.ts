@@ -4,7 +4,7 @@ import { sendResponse } from "../utils/api";
 import { setToCache } from "../utils/redis";
 import search_1 from "../templates/search_1.json";
 import { generateRandomUUID } from "../utils/generate_uuids";
-import { CACHE_DB_0 } from "../constants/constants";
+import { CACHE_DB_2 } from "../constants/constants";
 
 const initiateFirstSearch = async (payload: any) => {
 
@@ -19,7 +19,7 @@ const initiateFirstSearch = async (payload: any) => {
         await setToCache(
             payload?.context?.transaction_id,
             extracted_data,
-            CACHE_DB_0
+            CACHE_DB_2
         );
         const responsePayload = resolveTemplate(search_1, extracted_data);
         sendResponse(responsePayload, "search",{ subscriberUrl: subscriber_url});

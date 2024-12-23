@@ -5,7 +5,7 @@ import select from "../templates/select.json";
 import { sendResponse } from "../utils/api";
 import { getFromCache,setToCache } from "../utils/redis";
 import { generateRandomUUID } from "../utils/generate_uuids";
-import { CACHE_DB_0 } from "../constants/constants";
+import { CACHE_DB_2 } from "../constants/constants";
 import logger from "../utils/logger";
 
 function getRandomStations(data: any) {
@@ -78,7 +78,7 @@ const handleOnSearchRequest = async (payload: any) => {
 
 
   const handleOnSearchRequest1 = async (payload: any) => {
-    let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
+    let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_2);
     //perform l2 validations with json_cache_data
     const extracted_data = extractPayloadData(payload, "on_search_1");
     extracted_data["transaction_id"] = generateRandomUUID()
@@ -93,7 +93,7 @@ const handleOnSearchRequest = async (payload: any) => {
   };
 
   const handleOnSearchRequest2 = async (payload: any) => {
-    let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
+    let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_2);
 
     const extracted_data = extractPayloadData(payload, "on_search_2");
     extracted_data["message_id"] = generateRandomUUID()
@@ -107,7 +107,7 @@ const handleOnSearchRequest = async (payload: any) => {
     await setToCache(
         payload.context.transaction_id,
         combined_data,
-        CACHE_DB_0
+        CACHE_DB_2
       );
     sendResponse(responsePayload, "select");
   };

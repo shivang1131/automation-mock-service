@@ -6,7 +6,7 @@ import { sendResponse } from "../utils/api";
 import stations from '../dataPaths/static_cache_data.json'
 import { start } from "repl";
 import { setToCache } from "../utils/redis";
-import { CACHE_DB_0 } from "../constants/constants";
+import { CACHE_DB_2 } from "../constants/constants";
 import logger from "../utils/logger";
 
 const createCustomRoute = (routeData: any[], startStationCode: string, endStationCode: string): any[] => {
@@ -98,7 +98,7 @@ const handleSearch2 = async (payload: any) => {
   await setToCache(
       payload?.context?.transaction_id,
       combined_data,
-      CACHE_DB_0
+      CACHE_DB_2
     );
     logger.info(combined_data)
   sendResponse(responsePayload, "on_search");
