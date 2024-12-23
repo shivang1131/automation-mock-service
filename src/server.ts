@@ -9,8 +9,6 @@ import router from "./routes/trigger";
 import logger from "./utils/logger";
 
 
-RedisService.useDb(1);
-
 const app = express();
 
 

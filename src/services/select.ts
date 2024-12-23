@@ -113,7 +113,7 @@ const createQuoteFromItems = (items: any): any => {
 const handleSelectRequest = async (payload: any) => {
 
   const extarctedData = extractPayloadData(payload, "select");
-
+  extarctedData["selected_ids"] = Array.isArray(extarctedData["selected_ids"]) ? extarctedData["selected_ids"] : [extarctedData["selected_ids"]];
   const ids_with_quantities = {
     items: payload.message.order.items.reduce((acc: any, item: any) => {
       acc[item.id] = item.quantity.selected.count;
