@@ -4,7 +4,6 @@ import logger from "../utils/logger";
 
 export const getFromCache = async (key: string,db: number): Promise<any> => {
     try{
-      RedisService.useDb(db);
       let cacheData = await RedisService.getKey(key);
       cacheData = cacheData && canBeParsed(cacheData) ? JSON.parse(cacheData) : cacheData ;
       logger.info(cacheData)
@@ -20,7 +19,6 @@ export const setToCache = async (key: string, value: object | any[] | string| nu
     try{
       const cacheData : string = typeof value === 'string' ? value : JSON.stringify(value);
       logger.info(cacheData)
-      RedisService.useDb(db);
       await RedisService.setKey(key, cacheData);
     }
     catch(e:any){

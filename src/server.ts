@@ -11,6 +11,7 @@ import logger from "./utils/logger";
 
 const app = express();
 
+RedisService.useDb(0);
 
 // Middleware
 app.use(cors());
