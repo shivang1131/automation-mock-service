@@ -6,8 +6,8 @@ export const getFromCache = async (key: string,db: number): Promise<any> => {
     try{
       RedisService.useDb(db);
       let cacheData = await RedisService.getKey(key);
-      logger.info(cacheData)
       cacheData = cacheData && canBeParsed(cacheData) ? JSON.parse(cacheData) : cacheData ;
+      logger.info(cacheData)
       return cacheData;
   }
     catch(e:any){
