@@ -6,6 +6,7 @@ import { sendResponse } from "../utils/api";
 import { getFromCache,setToCache } from "../utils/redis";
 import { generateRandomUUID } from "../utils/generate_uuids";
 import { CACHE_DB_0 } from "../constants/constants";
+import logger from "../utils/logger";
 
 function getRandomStations(data: any) {
     // Flatten all stops across all fulfillments
@@ -25,8 +26,8 @@ function getRandomStations(data: any) {
       end_station: allStops[secondIndex].location.descriptor.code
     };
   }
-const transformToItemFormat = (items: any[]): any => {
-    return items.map(item => ({
+  const transformToItemFormat = (items: any[]): any => {
+    try{return items.map(item => ({
       id: item.id,
       quantity: {
         maximum: {
@@ -36,8 +37,11 @@ const transformToItemFormat = (items: any[]): any => {
           count: item.quantity.minimum.count,
         },
       },
-    }));
-  };
+    }));}
+      catch(e: any){
+        logger.error(e.message)
+      }
+    };
 
   const getRandomItemsWithQuantities = (items: any): any => {
     // Shuffle the array to select random items
@@ -91,9 +95,11 @@ const handleOnSearchRequest = async (payload: any) => {
   const handleOnSearchRequest2 = async (payload: any) => {
     let json_cache_data: any = await getFromCache(payload.context.transaction_id,CACHE_DB_0);
     const extracted_data = extractPayloadData(payload, "on_search_2");
+    logger.info(json_cache_data, "json_cache_data")
     extracted_data["message_id"] = generateRandomUUID()
     extracted_data["timestamp"] = new Date().toISOString();
     const items = json_cache_data?.items
+    logger.info(items,"items")
     const items_min_max = transformToItemFormat(items)
     const chosen_items = getRandomItemsWithQuantities(items_min_max)
     extracted_data["chosen_items"] = chosen_items
