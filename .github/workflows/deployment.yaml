@@ -1,4 +1,4 @@
-name: ondc Deployment
+name: ONDC Automation Mock Service Deployment
 
 on:
   push:
@@ -19,15 +19,12 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-          ssh -i ./key.pem ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} <<EOF
+          ssh -i ./key.pem ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} -T <<EOF
           REPO_DIR=~/ONDC-automation-framework/automation-mock-service
-          if [ -d "\$REPO_DIR" ]; then
-            echo "Repository already exists, pulling latest changes"
-            cd \$REPO_DIR && git pull origin main
-          else
-            echo "Cloning repository"
-            git clone https://github.com/ONDC-Official/automation-mock-service.git \$REPO_DIR
-          fi
+          echo "Removing existing repository directory if exists"
+          rm -rf \$REPO_DIR
+          echo "Cloning repository"
+          git clone https://github.com/ONDC-Official/automation-mock-service.git \$REPO_DIR
           EOF
 
       - name: Write secrets to .env on EC2
