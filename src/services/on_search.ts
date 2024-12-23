@@ -103,6 +103,7 @@ const handleOnSearchRequest = async (payload: any) => {
     extracted_data["chosen_items"] = chosen_items
     const combined_data = {...json_cache_data,...extracted_data}
     const responsePayload = resolveTemplate(select, combined_data);
+    logger.info(combined_data)
     await setToCache(
         payload.context.transaction_id,
         combined_data,
