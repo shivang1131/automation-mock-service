@@ -155,22 +155,22 @@ const handleSelectRequest = async (payload: any) => {
   extarctedData["timestamp"] = new Date().toISOString();
   const combined_data = { ...json_cache_data, ...extarctedData };
   const responsePayload = resolveTemplate(on_select_template, combined_data);
-  const l2: any = performL2Validations(
-    payload?.context?.action,
-    payload,
-    true,
-    combined_data
-  );
-  if (!l2[0].valid) {
-    const combined_errors = {"errors": l2}
-    const responsePayload = resolveTemplate(error_template, {
-      ...combined_data,
-      action: "on_select",
-      error: combined_errors,
-    });
-    sendResponse(responsePayload, "on_select");
-    return;
-  }
+  // const l2: any = performL2Validations(
+  //   payload?.context?.action,
+  //   payload,
+  //   true,
+  //   combined_data
+  // );
+  // if (!l2[0].valid) {
+  //   const combined_errors = {"errors": l2}
+  //   const responsePayload = resolveTemplate(error_template, {
+  //     ...combined_data,
+  //     action: "on_select",
+  //     error: combined_errors,
+  //   });
+  //   sendResponse(responsePayload, "on_select");
+  //   return;
+  // }
   await setToCache(
     payload?.context?.transaction_id,
     combined_data,
