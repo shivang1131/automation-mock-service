@@ -94,7 +94,6 @@ const handleSearch2 = async (payload: any) => {
   extarctedData_search["timestamp"] = new Date().toISOString();
   const responsePayload = resolveTemplate(on_search_2_template, extarctedData_search);
   const extarctedData_on_search = extractPayloadData(responsePayload,"on_search_2");
-  logger.info(extarctedData_on_search)
   const combined_data = { ...extarctedData_search, ...extarctedData_on_search};
   await setToCache(
       payload?.context?.transaction_id,
