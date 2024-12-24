@@ -38,6 +38,7 @@ const handleInitRequest = async (payload: any) => {
       action: "on_init",
       error: combined_errors,
     });
+    console.log(responsePayload)
     sendResponse(responsePayload, "on_init");
     return;
   }

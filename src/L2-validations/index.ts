@@ -12,10 +12,11 @@ export function performL2Validations(
     allErrors = false,
     externalData = {},
 ) {
+    const duplicate = {...payload};
     switch (action) {
         case "on_search":
             return on_search({
-                payload: payload,
+                payload: duplicate,
                 externalData: externalData,
                 config: {
                     runAllValidations: allErrors,
@@ -23,7 +24,7 @@ export function performL2Validations(
             });
         case "select":
             return select({
-                payload: payload,
+                payload: duplicate,
                 externalData: externalData,
                 config: {
                     runAllValidations: allErrors,
@@ -31,7 +32,7 @@ export function performL2Validations(
             });
         case "on_select":
             return on_select({
-                payload: payload,
+                payload: duplicate,
                 externalData: externalData,
                 config: {
                     runAllValidations: allErrors,
@@ -39,7 +40,7 @@ export function performL2Validations(
             });
         case "init":
             return init({
-                payload: payload,
+                payload: duplicate,
                 externalData: externalData,
                 config: {
                     runAllValidations: allErrors,
@@ -47,7 +48,7 @@ export function performL2Validations(
             });
         case "on_init":
             return on_init({
-                payload: payload,
+                payload: duplicate,
                 externalData: externalData,
                 config: {
                     runAllValidations: allErrors,
@@ -55,7 +56,7 @@ export function performL2Validations(
             });
         case "confirm":
             return confirm({
-                payload: payload,
+                payload: duplicate,
                 externalData: externalData,
                 config: {
                     runAllValidations: allErrors,
@@ -63,7 +64,7 @@ export function performL2Validations(
             });
         case "on_confirm":
             return on_confirm({
-                payload: payload,
+                payload: duplicate,
                 externalData: externalData,
                 config: {
                     runAllValidations: allErrors,
