@@ -12,7 +12,7 @@ export function performL2Validations(
     allErrors = false,
     externalData = {},
 ) {
-    const duplicate = {...payload};
+    const duplicate = structuredClone(payload);
     switch (action) {
         case "on_search":
             return on_search({
