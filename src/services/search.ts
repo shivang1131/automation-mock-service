@@ -60,7 +60,7 @@ const createCustomRoute = (routeData: any[], startStationCode: string, endStatio
       };
   });
 };
-const handleSerachRequest =  (payload: any) => {
+const handleSearchRequest =  (payload: any) => {
   if (payload.message.intent.fulfillment.stops) {
     handleSearch2(payload);
   } else {
@@ -103,4 +103,4 @@ const handleSearch2 = async (payload: any) => {
   sendResponse(responsePayload, "on_search");
 };
 
-export default handleSerachRequest;
+export default handleSearchRequest;
